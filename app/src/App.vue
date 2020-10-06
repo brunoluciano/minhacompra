@@ -1,34 +1,23 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="glossy">
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
-          icon="menu"
-        />
-
-        <q-toolbar-title> Minha Compra </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-
-    <q-page-container>
-      <layout-component></layout-component>
-    </q-page-container>
-  </q-layout>
+  <div>
+    <main-menu>
+      <div class="row">
+        <div class="col-12"></div>
+      </div>
+    </main-menu>
+  </div>
 </template>
 
 <script>
-import LayoutComponent from "./components/MainLayout.vue";
+// import LayoutComponent from "./components/MainLayout.vue";
+import MainMenu from "./components/layout/MainMenu.vue";
 
 export default {
   name: "LayoutDefault",
 
   components: {
-    LayoutComponent,
+    // LayoutComponent,
+    MainMenu,
   },
 
   data() {
@@ -39,5 +28,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>
