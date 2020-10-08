@@ -47,7 +47,7 @@
               dark
               color="cyan-3"
               type="email"
-              v-model="email"
+              v-model="login.email"
               label="E-mail"
             >
               <template v-slot:prepend>
@@ -63,7 +63,7 @@
               dark
               color="cyan-3"
               type="password"
-              v-model="password"
+              v-model="login.password"
               label="Senha"
             >
               <template v-slot:prepend>
@@ -77,7 +77,7 @@
               <div class="col-12 col-md-6">
                 <q-checkbox
                   dark
-                  v-model="manterConectado"
+                  v-model="login.manterConectado"
                   label="Manter-me conectado"
                   color="cyan-4"
                 />
@@ -100,6 +100,7 @@
               rounded
               color="cyan-4"
               label="Entrar"
+              type="submit"
               @click="onClick"
               style="width: 100%"
             />
@@ -115,9 +116,222 @@
               rounded
               color="btn-cadastrar"
               label="Cadastrar-se"
-              @click="onClick"
+              @click="modalCadastro = true"
               style="width: 100%"
             />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <!-- MODAL CADASTRO CLIENTE -->
+    <q-dialog v-model="modalCadastro" persistent>
+      <q-card
+        style="width: 80vw; max-width: 100vw; border-radius: 20px"
+        class="q-pa-md"
+      >
+        <q-card-section>
+          <div class="text-h3 text-teal-8">Criar Conta</div>
+          <hr />
+        </q-card-section>
+
+        <q-card-section class="row q-pt-none">
+          <div class="col">
+            <q-form @submit="onSubmit" @reset="onReset">
+              <div class="q-col-gutter-x-sm q-col-gutter-y-sm row items-start">
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.nome"
+                  label="Nome"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.email"
+                  label="E-mail"
+                  type="email"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.password"
+                  label="Senha"
+                  type="password"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.cnf_password"
+                  label="Confirmar senha"
+                  type="password"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+              </div>
+              <div
+                class="q-col-gutter-x-sm q-col-gutter-y-sm row items-start q-mt-sm"
+              >
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.cpf"
+                  label="CPF"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-select
+                  rounded
+                  outlined
+                  v-model="cadastro.sexo"
+                  :options="options.sexo"
+                  label="Sexo"
+                  color="cyan-7"
+                  transition-show="jump-down"
+                  transition-hide="jump-up"
+                  class="col-12 col-md-3"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.endereco"
+                  label="Endereço"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-4"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model.number="cadastro.numero"
+                  label="Número"
+                  type="number"
+                  color="cyan-7"
+                  class="col-12 col-md-2"
+                />
+              </div>
+              <div
+                class="q-col-gutter-x-sm q-col-gutter-y-sm row items-start q-mt-sm"
+              >
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.bairro"
+                  label="Bairro"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.complemento"
+                  label="Complemento"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.cidade"
+                  label="Cidade"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-3"
+                />
+                <q-select
+                  rounded
+                  outlined
+                  v-model="cadastro.uf"
+                  :options="options.uf"
+                  label="Estado"
+                  color="cyan-7"
+                  transition-show="jump-down"
+                  transition-hide="jump-up"
+                  class="col-12 col-md-3"
+                />
+              </div>
+              <div
+                class="q-col-gutter-x-sm q-col-gutter-y-sm row items-start q-mt-sm"
+              >
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.cep"
+                  label="CEP"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-4"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.telefone"
+                  label="Telefone"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-4"
+                />
+                <q-input
+                  rounded
+                  outlined
+                  v-model="cadastro.nascimento"
+                  label="Data de nascimento"
+                  type="text"
+                  color="cyan-7"
+                  class="col-12 col-md-4"
+                >
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy
+                        ref="qDateProxy"
+                        transition-show="jump-down"
+                        transition-hide="jump-up"
+                      >
+                        <q-date v-model="cadastro.nascimento" color="cyan-7">
+                          <div class="row items-center justify-end">
+                            <q-btn
+                              v-close-popup
+                              label="Fechar"
+                              color="cyan-8"
+                              flat
+                            />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+              </div>
+              <br />
+              <div class="q-col-gutter-y-sm row items-start q-mt-sm">
+                <q-btn
+                  rounded
+                  label="Confirmar"
+                  type="submit"
+                  color="secondary"
+                  class="col-12 col-md-6"
+                />
+                <q-btn
+                  outline
+                  rounded
+                  label="Cancelar"
+                  type="reset"
+                  color="grey"
+                  class="col-12 col-md-6"
+                  v-close-popup
+                />
+              </div>
+            </q-form>
           </div>
         </q-card-section>
       </q-card>
@@ -134,27 +348,53 @@
 </template>
 
 <script>
-// import LoginCliente from "../main/forms/LoginCliente.vue";
+// import CadastrarCliente from "../main/forms/CadastrarCliente.vue";
 
 export default {
   name: "main-menu",
-
-  components: {
-    // LoginCliente,
-  },
-
   data() {
     return {
       modalLogin: false,
+      modalCadastro: false,
       manterConectado: false,
-      email: "",
-      password: "",
+
+      login: {
+        email: "",
+        password: "",
+        manterConectado: true,
+      },
+
+      cadastro: {
+        nome: "",
+        email: "",
+        password: "",
+        cnf_password: "",
+        cpf: "",
+        sexo: "",
+        endereco: "",
+        numero: "",
+        bairro: "",
+        complemento: "",
+        estado: "",
+        cep: "",
+        telefone: "",
+        nascimento: "",
+      },
+
+      options: {
+        sexo: ["Masculino", "Feminino"],
+        uf: ["Espírito Santo", "Minas Gerais", "Rio de Janeiro", "São Paulo"],
+      },
     };
+  },
+
+  components: {
+    // CadastrarCliente,
   },
 
   methods: {
     closedModal: function (value) {
-      this.modalLogin = value;
+      this.modalCadastro = value;
     },
   },
 };
@@ -182,7 +422,7 @@ export default {
     rgba(73, 179, 167, 1) 0%,
     rgba(45, 167, 122, 1) 100%
   );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#49b3a7",endColorstr="#2da77a",GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#49b3a7", endColorstr="#2da77a", GradientType=1);
 }
 
 .bg-gradient-login {
@@ -202,7 +442,7 @@ export default {
     rgba(46, 128, 118, 1) 0%,
     rgba(21, 103, 73, 1) 100%
   );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2e8076",endColorstr="#156749",GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2e8076", endColorstr="#156749", GradientType=1);
 }
 
 .bg-btn-cadastrar {
