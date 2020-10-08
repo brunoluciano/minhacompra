@@ -1,28 +1,6 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-gradient-menu text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <h4 class="q-ma-sm">
-            <q-icon name="mdi-cart-variant" size="auto"></q-icon>
-            Minha Compra
-          </h4>
-        </q-toolbar-title>
-        <q-btn
-          push
-          rounded
-          no-caps
-          class="bg-btn-login"
-          icon="person"
-          label="Entrar ou Cadastrar"
-          @click="modalLogin = true"
-        />
-      </q-toolbar>
-    </q-header>
-
-    <!-- MODAL LOGIN -->
-    <!-- <login-cliente :open="modalLogin" @teste="closedModal" /> -->
-    <q-dialog v-model="modalLogin" class="q-ma-none">
+  <div>
+    <q-dialog v-model="open" class="q-ma-none">
       <q-card
         style="width: 60vw; max-width: 110vw; border-radius: 30px"
         class="shadow-5"
@@ -122,69 +100,22 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-
-    <q-page-container>
-      <slot></slot>
-    </q-page-container>
-
-    <!-- <q-footer elevated class="bg-dark text-white">
-      <q-toolbar> </q-toolbar>
-    </q-footer> -->
-  </q-layout>
+  </div>
 </template>
 
 <script>
-// import LoginCliente from "../main/forms/LoginCliente.vue";
-
 export default {
-  name: "main-menu",
-
-  components: {
-    // LoginCliente,
-  },
-
-  data() {
-    return {
-      modalLogin: false,
-      manterConectado: false,
-      email: "",
-      password: "",
-    };
-  },
-
-  methods: {
-    closedModal: function (value) {
-      this.modalLogin = value;
+  name: "login-cliente",
+  props: ["open"],
+  watch: {
+    open: function () {
+      this.$emit("teste", false);
     },
   },
 };
 </script>
 
 <style scoped>
-.bg-btn-login {
-  background-color: #065a97;
-}
-
-.bg-gradient-menu {
-  background: rgb(73, 179, 167);
-  background: -moz-linear-gradient(
-    90deg,
-    rgba(73, 179, 167, 1) 0%,
-    rgba(45, 167, 122, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    90deg,
-    rgba(73, 179, 167, 1) 0%,
-    rgba(45, 167, 122, 1) 100%
-  );
-  background: linear-gradient(
-    90deg,
-    rgba(73, 179, 167, 1) 0%,
-    rgba(45, 167, 122, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#49b3a7",endColorstr="#2da77a",GradientType=1);
-}
-
 .bg-gradient-login {
   background: rgb(46, 128, 118);
   background: -moz-linear-gradient(
