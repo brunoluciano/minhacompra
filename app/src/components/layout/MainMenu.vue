@@ -319,23 +319,23 @@
                 </q-input>
               </div>
               <br />
-              <div class="q-col-gutter-y-sm row items-start q-mt-sm">
-                <q-btn
-                  rounded
-                  label="Confirmar"
-                  type="submit"
-                  color="secondary"
-                  class="col-12 col-md-6"
-                />
-                <q-btn
-                  outline
-                  rounded
-                  label="Cancelar"
-                  type="reset"
-                  color="grey"
-                  class="col-12 col-md-6"
-                  v-close-popup
-                />
+              <div class="q-mt-sm">
+                <q-btn-group rounded spread>
+                  <q-btn
+                    rounded
+                    label="Confirmar"
+                    type="submit"
+                    color="secondary"
+                  />
+                  <q-btn
+                    outline
+                    rounded
+                    label="Cancelar"
+                    type="reset"
+                    color="grey"
+                    v-close-popup
+                  />
+                </q-btn-group>
               </div>
             </q-form>
           </div>
@@ -362,12 +362,11 @@ export default {
     return {
       modalLogin: false,
       modalCadastro: false,
-      manterConectado: false,
 
       login: {
         email: "",
         password: "",
-        manterConectado: true,
+        manterConectado: false,
       },
 
       cadastro: {
