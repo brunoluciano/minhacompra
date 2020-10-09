@@ -1,22 +1,28 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-gradient-menu text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <h4 class="q-ma-sm">
-            <q-icon name="mdi-cart-variant" size="auto"></q-icon>
-            Minha Compra
-          </h4>
-        </q-toolbar-title>
-        <q-btn
-          push
-          rounded
-          no-caps
-          class="bg-btn-login"
-          icon="person"
-          label="Entrar ou Cadastrar"
-          @click="modalLogin = true"
-        />
+      <q-toolbar class="row items-center">
+        <div class="col">
+          <router-link :to="{ name: 'home' }" class="remove-link-style">
+            <q-toolbar-title>
+              <h4 class="q-ma-sm">
+                <q-icon name="mdi-cart-variant" size="auto"></q-icon>
+                Minha Compra
+              </h4>
+            </q-toolbar-title>
+          </router-link>
+        </div>
+        <div class="col text-right">
+          <q-btn
+            push
+            rounded
+            no-caps
+            class="bg-btn-login"
+            icon="person"
+            label="Entrar ou Cadastrar"
+            @click="modalLogin = true"
+          />
+        </div>
       </q-toolbar>
     </q-header>
 
