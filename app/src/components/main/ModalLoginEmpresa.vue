@@ -23,7 +23,7 @@
               rounded
               filled
               dark
-              color="cyan-3"
+              color="blue-3"
               type="email"
               v-model="login.email"
               label="E-mail"
@@ -39,7 +39,7 @@
               rounded
               filled
               dark
-              color="cyan-3"
+              color="blue-3"
               type="password"
               v-model="login.password"
               label="Senha"
@@ -57,7 +57,7 @@
                   dark
                   v-model="login.manterConectado"
                   label="Manter-me conectado"
-                  color="cyan-4"
+                  color="blue-11"
                 />
               </div>
               <div class="col-12 col-md-6 text-right">
@@ -76,18 +76,18 @@
             <q-btn
               push
               rounded
-              color="cyan-4"
+              color="blue-11"
               label="Entrar"
               type="submit"
               @click="onClick"
               style="width: 100%"
             />
           </div>
-          <div class="col-12 col-md-5 q-pa-xl q-ma-none">
-            <span class="text-h4 text-cadastrar">Criar Conta</span>
+          <div class="col-12 col-md-5 q-py-xl q-px-lg q-ma-none">
+            <span class="text-h4 text-cadastrar">Cadastrar Empresa</span>
             <hr class="text-teal-8 q-mb-md" />
             <p class="text-italic text-grey-8">
-              Não possui conta? Faça uma agora mesmo!
+              Não possui sua loja cadastrada? Registre agora mesmo!
             </p>
             <q-btn
               push
@@ -103,21 +103,21 @@
     </q-dialog>
 
     <!-- MODAL CADASTRO -->
-    <cadastrar-cliente
+    <!-- <cadastrar-cliente
       :mostraModal="modal.cadastro"
       @fecharModal="fecharModalCadastro"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
-import CadastrarCliente from "./CadastrarCliente.vue";
+// import CadastrarCliente from "./CadastrarCliente.vue";
 
 export default {
   props: ["mostraModal"],
 
   components: {
-    CadastrarCliente,
+    // CadastrarCliente,
   },
 
   data() {
@@ -155,29 +155,29 @@ export default {
 
 <style scoped>
 .bg-gradient-login {
-  background: rgb(46, 128, 118);
+  background: rgb(46, 74, 128);
   background: -moz-linear-gradient(
     90deg,
-    rgba(46, 128, 118, 1) 0%,
-    rgba(21, 103, 73, 1) 100%
+    rgba(46, 74, 128, 1) 0%,
+    rgba(21, 47, 103, 1) 100%
   );
   background: -webkit-linear-gradient(
     90deg,
-    rgba(46, 128, 118, 1) 0%,
-    rgba(21, 103, 73, 1) 100%
+    rgba(46, 74, 128, 1) 0%,
+    rgba(21, 47, 103, 1) 100%
   );
   background: linear-gradient(
     90deg,
-    rgba(46, 128, 118, 1) 0%,
-    rgba(21, 103, 73, 1) 100%
+    rgba(46, 74, 128, 1) 0%,
+    rgba(21, 47, 103, 1) 100%
   );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2e8076",endColorstr="#156749",GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2e4a80",endColorstr="#152f67",GradientType=1);
 }
 
 .bg-btn-cadastrar {
-  background: #2e8076;
+  background: #2e4a80;
 }
 .text-cadastrar {
-  color: #2e8076;
+  color: #2e4a80;
 }
 </style>

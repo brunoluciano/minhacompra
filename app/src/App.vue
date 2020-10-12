@@ -1,19 +1,19 @@
 <template>
   <div class="corpo">
-    <main-menu>
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
-    </main-menu>
+    <!-- <main-menu> -->
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
+    <!-- </main-menu> -->
   </div>
 </template>
 
 <script>
-import MainMenu from "./components/layout/MainMenu.vue";
+// import MainMenu from "./components/layout/MainMenu.vue";
 
 export default {
   components: {
-    MainMenu,
+    // MainMenu,
   },
 
   created() {

@@ -1,8 +1,16 @@
 import Home from './components/main/Home.vue';
 const BuscarLojas = () =>
     import ('./components/main/BuscarLojas.vue');
+
+const IndexCliente = () =>
+    import ('./components/main/cliente/Index.vue');
 const PerfilCliente = () =>
     import ('./components/main/cliente/Perfil.vue');
+
+const IndexSistema = () =>
+    import ('./components/app/Index.vue');
+const DashboardGerente = () =>
+    import ('./components/app/gerente/Dashboard.vue');
 
 export const routes = [{
         path: '*',
@@ -10,12 +18,27 @@ export const routes = [{
         name: 'home'
     },
     {
-        path: '/buscarLojas',
-        component: BuscarLojas,
-        name: 'buscarlojas'
-    }, {
-        path: '/perfil',
-        component: PerfilCliente,
-        name: 'perfil'
+        path: '/user',
+        component: IndexCliente,
+        name: 'user',
+        children: [{
+            path: 'buscarLojas',
+            component: BuscarLojas,
+            name: 'buscarlojas'
+        }, {
+            path: 'perfil',
+            component: PerfilCliente,
+            name: 'perfil'
+        }, ]
+    },
+    {
+        path: '/app',
+        component: IndexSistema,
+        name: 'app',
+        children: [{
+            path: 'dashboard',
+            component: DashboardGerente,
+            name: 'dashboardgerente'
+        }]
     }
 ];

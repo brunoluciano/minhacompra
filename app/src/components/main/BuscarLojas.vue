@@ -2,7 +2,9 @@
   <div class="q-pa-lg">
     <div class="row">
       <div class="col text-center">
-        <h3 class="text-grey-7">Selecione um supermercado próximo a você!</h3>
+        <div class="text-h3 q-my-lg text-grey-7">
+          Selecione um supermercado próximo a você!
+        </div>
       </div>
     </div>
 

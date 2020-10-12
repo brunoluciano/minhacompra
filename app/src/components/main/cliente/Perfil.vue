@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import Card from "./Card.vue";
+import Card from "../../shared/Card.vue";
 import ModalListaCompras from "./ModalListaCompras.vue";
 import ModalLojasFavoritas from "./ModalLojasFavoritas.vue";
 import ModalCartoes from "./ModalCartoes.vue";

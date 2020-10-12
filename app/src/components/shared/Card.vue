@@ -2,7 +2,7 @@
   <div>
     <q-card class="card text-white shadow-5" :style="cor">
       <q-card-section horizontal>
-        <q-card-section class="q-pr-none q-ml-sm">
+        <q-card-section class="q-pr-none q-ml-sm ellipsis-2-lines">
           <div class="text-h4 text-weight-bold">{{ descricao }}</div>
         </q-card-section>
 
