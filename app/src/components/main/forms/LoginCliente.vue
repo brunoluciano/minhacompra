@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-dialog v-model="open" class="q-ma-none">
+    <q-dialog v-model="mostraModal" class="q-ma-none">
       <q-card
         style="width: 60vw; max-width: 110vw; border-radius: 30px"
         class="shadow-5"
@@ -25,7 +25,7 @@
               dark
               color="cyan-3"
               type="email"
-              v-model="email"
+              v-model="login.email"
               label="E-mail"
             >
               <template v-slot:prepend>
@@ -41,7 +41,7 @@
               dark
               color="cyan-3"
               type="password"
-              v-model="password"
+              v-model="login.password"
               label="Senha"
             >
               <template v-slot:prepend>
@@ -55,7 +55,7 @@
               <div class="col-12 col-md-6">
                 <q-checkbox
                   dark
-                  v-model="manterConectado"
+                  v-model="login.manterConectado"
                   label="Manter-me conectado"
                   color="cyan-4"
                 />
@@ -78,6 +78,7 @@
               rounded
               color="cyan-4"
               label="Entrar"
+              type="submit"
               @click="onClick"
               style="width: 100%"
             />
@@ -93,23 +94,60 @@
               rounded
               color="btn-cadastrar"
               label="Cadastrar-se"
-              @click="onClick"
+              @click="abrirModalCadastro"
               style="width: 100%"
             />
           </div>
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <!-- MODAL CADASTRO -->
+    <cadastrar-cliente
+      :mostraModal="modal.cadastro"
+      @fecharModal="fecharModalCadastro"
+    />
   </div>
 </template>
 
 <script>
+import CadastrarCliente from "./CadastrarCliente.vue";
+
 export default {
-  name: "login-cliente",
-  props: ["open"],
+  props: ["mostraModal"],
+
+  components: {
+    CadastrarCliente,
+  },
+
+  data() {
+    return {
+      login: {
+        email: "",
+        password: "",
+        manterConectado: false,
+      },
+
+      modal: {
+        cadastro: false,
+      },
+    };
+  },
+
+  methods: {
+    abrirModalCadastro() {
+      this.modal.cadastro = true;
+    },
+    fecharModalCadastro(val) {
+      this.modal.cadastro = val.target;
+    },
+  },
+
   watch: {
-    open: function () {
-      this.$emit("teste", false);
+    mostraModal: function () {
+      if (!this.mostraModal) {
+        this.$emit("fecharModal", this.mostraModal);
+      }
     },
   },
 };

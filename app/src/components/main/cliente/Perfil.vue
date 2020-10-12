@@ -1,6 +1,6 @@
 <template>
   <div class="row q-pa-lg q-col-gutter-x-lg q-col-gutter-y-xl">
-    <div class="col-12 col-md-3">
+    <div class="col-12 col-sm-5 col-md-3">
       <q-card class="card-cliente shadow-5">
         <q-card-section class="bg-title-card text-white q-pa-xs">
           <div class="text-h5 text-center">Nome Cliente</div>
@@ -53,23 +53,23 @@
       </q-card>
     </div>
 
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-sm-7 col-md-9">
       <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" @click="mostrarListaCompras">
           <card
             :descricao="card.lista_compra.descricao"
             :icone="card.lista_compra.icone"
             :cor="card.lista_compra.cor"
           ></card>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" @click="mostrarLojasFavoritas">
           <card
             :descricao="card.lojas_favoritas.descricao"
             :icone="card.lojas_favoritas.icone"
             :cor="card.lojas_favoritas.cor"
           ></card>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" @click="mostrarCartoes">
           <card
             :descricao="card.cartoes.descricao"
             :icone="card.cartoes.icone"
@@ -78,23 +78,42 @@
         </div>
       </div>
 
-      <hr class="q-my-lg" />
+      <q-separator color="grey-5" class="q-my-lg" />
 
       <div class="row">
         <div class="col">
           <q-table title="Últimas Compras" :data="rows" row-key="name" />
         </div>
       </div>
+
+      <modal-lista-compras
+        :mostraModal="modal.mostraListaCompras"
+        @fecharModal="fecharModalListaCompras"
+      ></modal-lista-compras>
+      <modal-lojas-favoritas
+        :mostraModal="modal.mostraLojasFavoritas"
+        @fecharModal="fecharModalLojasFavoritas"
+      ></modal-lojas-favoritas>
+      <modal-cartoes
+        :mostraModal="modal.mostraCartoes"
+        @fecharModal="fecharModalCartoes"
+      ></modal-cartoes>
     </div>
   </div>
 </template>
 
 <script>
 import Card from "./Card.vue";
+import ModalListaCompras from "./ModalListaCompras.vue";
+import ModalLojasFavoritas from "./ModalLojasFavoritas.vue";
+import ModalCartoes from "./ModalCartoes.vue";
 
 export default {
   components: {
     Card,
+    ModalListaCompras,
+    ModalLojasFavoritas,
+    ModalCartoes,
   },
 
   data() {
@@ -129,7 +148,33 @@ export default {
           detalhes: "+",
         },
       ],
+      modal: {
+        mostraListaCompras: false,
+        mostraLojasFavoritas: false,
+        mostraCartoes: false,
+      },
     };
+  },
+
+  methods: {
+    mostrarListaCompras() {
+      this.modal.mostraListaCompras = true;
+    },
+    fecharModalListaCompras(val) {
+      this.modal.mostraListaCompras = val.target;
+    },
+    mostrarLojasFavoritas() {
+      this.modal.mostraLojasFavoritas = true;
+    },
+    fecharModalLojasFavoritas(val) {
+      this.modal.mostraLojasFavoritas = val.target;
+    },
+    mostrarCartoes() {
+      this.modal.mostraCartoes = true;
+    },
+    fecharModalCartoes(val) {
+      this.modal.mostraCartoes = val.target;
+    },
   },
 };
 </script>
