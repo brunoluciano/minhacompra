@@ -11,6 +11,8 @@ const IndexSistema = () =>
     import ('./components/app/Index.vue');
 const DashboardGerente = () =>
     import ('./components/app/gerente/Dashboard.vue');
+const IndexFuncionario = () =>
+    import ('./components/app/funcionario/Index.vue');
 
 export const routes = [{
         path: '*',
@@ -36,9 +38,15 @@ export const routes = [{
         component: IndexSistema,
         name: 'app',
         children: [{
-            path: 'dashboard',
-            component: DashboardGerente,
-            name: 'dashboardgerente'
-        }]
+                path: 'dashboard',
+                component: DashboardGerente,
+                name: 'dashboardgerente'
+            },
+            {
+                path: 'pedidos',
+                component: IndexFuncionario,
+                name: 'dashboardgerente'
+            }
+        ]
     }
 ];

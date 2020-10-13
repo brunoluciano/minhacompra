@@ -37,7 +37,7 @@
       <br />
       <div class="row q-col-gutter-x-xl q-col-gutter-y-lg">
         <div class="col-12 col-sm-6 col-md-3" v-for="n in 12" :key="n">
-          <q-card class="shadow-3 lista-card-loja q-pa-xs" bordered>
+          <q-card class="bg-grey-2 shadow-3 lista-card-loja q-pa-xs" bordered>
             <q-item>
               <q-item-section avatar>
                 <q-avatar class="shadow-3" size="50px">

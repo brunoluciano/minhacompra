@@ -38,10 +38,11 @@
           <div class="col-12 col-md-4" v-for="n in 9" :key="n">
             <div class="row">
               <q-rating
+                v-model="favorito"
                 size="3em"
                 max="1"
-                icon="star_border"
-                color="teal"
+                icon="star"
+                color="teal-4"
                 class="col-2 q-pa-none"
               />
               <q-card
@@ -89,6 +90,7 @@ export default {
   data() {
     return {
       n: 0,
+      favorito: 1,
     };
   },
 

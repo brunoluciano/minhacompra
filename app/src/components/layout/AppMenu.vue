@@ -3,7 +3,7 @@
     <q-header elevated class="bg-gradient-menu text-white">
       <q-toolbar class="row items-center">
         <div class="col">
-          <router-link :to="{ name: 'home' }" class="remove-link-style">
+          <router-link :to="{ name: 'app' }" class="remove-link-style">
             <q-toolbar-title>
               <h4 class="q-ma-sm">
                 <q-icon name="mdi-store" size="auto"></q-icon>
