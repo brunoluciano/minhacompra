@@ -1,23 +1,27 @@
 <template>
   <div class="corpo">
-    <!-- <main-menu> -->
     <transition name="fade" mode="out-in">
       <router-view></router-view>
     </transition>
-    <!-- </main-menu> -->
   </div>
 </template>
 
 <script>
-// import MainMenu from "./components/layout/MainMenu.vue";
-
 export default {
-  components: {
-    // MainMenu,
+  data() {
+    return {
+      carregando: true,
+    };
   },
 
   created() {
     document.title = "Minha Compra";
+    this.$q.loading.show();
+  },
+
+  mounted() {
+    this.carregando = false;
+    // this.$q.loading.hide();
   },
 };
 </script>

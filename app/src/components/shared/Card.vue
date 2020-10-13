@@ -1,12 +1,12 @@
 <template>
   <div>
     <q-card class="card text-white shadow-5" :style="cor">
-      <q-card-section horizontal>
-        <q-card-section class="q-pr-none q-ml-sm ellipsis-2-lines">
-          <div class="text-h4 text-weight-bold">{{ descricao }}</div>
+      <q-card-section horizontal v-ripple.early>
+        <q-card-section class="q-pr-none q-ml-sm ellipsis-3-lines">
+          <div class="text-h5 text-weight-bold">{{ descricao }}</div>
         </q-card-section>
 
-        <q-card-section class="q-pl-none">
+        <q-card-section class="right">
           <q-icon :name="icone" size="5rem" />
         </q-card-section>
       </q-card-section>

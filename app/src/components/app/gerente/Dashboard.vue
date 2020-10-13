@@ -32,7 +32,7 @@
     </div>
 
     <q-separator color="grey-5" class="q-my-lg" />
-    <div class="row q-pa-none q-col-gutter-x-md q-col-gutter-y-md">
+    <div class="row q-pa-none q-col-gutter-x-lg q-col-gutter-y-md">
       <div class="col-12 text-h4 text-grey-8 text-weight-bold">Vendas</div>
       <div
         class="col-12 col-sm-6 col-md-3"
@@ -158,13 +158,13 @@ export default {
           descricao: "Gerar Relatórios",
           icone: "mdi-file-chart",
           cor:
-            "background: rgb(204,245,83);background: linear-gradient(0deg, rgba(204,245,83,1) 0%, rgba(200,241,135,1) 100%);",
+            "background: rgb(210,89,171);background: linear-gradient(0deg, rgba(210,89,171,1) 0%, rgba(233,120,187,1) 100%);",
         },
         configuracoes: {
           descricao: "Editar Banners",
           icone: "mdi-view-carousel",
           cor:
-            "background: rgb(83,245,139);background: linear-gradient(0deg, rgba(83,245,139,1) 0%, rgba(135,241,172,1) 100%);",
+            "background: rgb(89,210,131);background: linear-gradient(0deg, rgba(89,210,131,1) 0%, rgba(120,233,159,1) 100%);",
         },
       },
     };

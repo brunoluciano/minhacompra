@@ -10,6 +10,11 @@
 import MainMenu from "../../layout/MainMenu.vue";
 
 export default {
+  data() {
+    return {
+      isLoading: true,
+    };
+  },
   components: {
     MainMenu,
   },
