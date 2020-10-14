@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { QSpinnerPuff } from "quasar";
+
 export default {
   data() {
     return {
@@ -16,12 +18,19 @@ export default {
 
   created() {
     document.title = "Minha Compra";
-    this.$q.loading.show();
+    // this.$q.loading.show();
+    this.$q.loading.show({
+      spinner: QSpinnerPuff,
+      spinnerColor: "white",
+      backgroundColor: "blue-grey",
+    });
   },
 
   mounted() {
-    this.carregando = false;
-    // this.$q.loading.hide();
+    this.timer = setTimeout(() => {
+      this.$q.loading.hide();
+      this.timer = void 0;
+    }, 800);
   },
 };
 </script>

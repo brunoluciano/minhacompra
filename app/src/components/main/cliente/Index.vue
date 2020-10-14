@@ -11,13 +11,13 @@ import MainMenu from "../../layout/MainMenu.vue";
 
 export default {
   data() {
-    return {
-      isLoading: true,
-    };
+    return {};
   },
   components: {
     MainMenu,
   },
+
+  created() {},
 };
 </script>
 

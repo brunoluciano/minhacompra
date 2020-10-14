@@ -8,12 +8,12 @@ import '@quasar/extras/material-icons-round/material-icons-round.css'
 import '@quasar/extras/material-icons-sharp/material-icons-sharp.css'
 import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
 import '@quasar/extras/mdi-v5/mdi-v5.css'
-import { Quasar } from 'quasar'
+import { Quasar, Loading, QSpinnerPuff } from 'quasar'
 
 Vue.use(Quasar, {
     config: {},
-    components: { /* not needed if importStrategy is not 'manual' */ },
+    components: { QSpinnerPuff },
     directives: { /* not needed if importStrategy is not 'manual' */ },
-    plugins: {},
+    plugins: { Loading },
     lang: lang
 })
