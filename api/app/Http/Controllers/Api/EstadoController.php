@@ -41,7 +41,8 @@ class EstadoController extends Controller
      */
     public function show($id)
     {
-        //
+        $estado = Estado::findOrFail($id);
+        return $estado;
     }
 
     /**

@@ -24,4 +24,6 @@ Route::get('/', function () {
 
 
 Route::resource('estado', 'Api\\EstadoController');
+Route::resource('pessoa', 'Api\\PessoaController');
+Route::resource('cliente', 'Api\\ClienteController');
 // Route::resource('teste', 'Teste');
