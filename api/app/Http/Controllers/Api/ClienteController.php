@@ -35,7 +35,7 @@ class ClienteController extends Controller
             'pessoa_id' => ['required'],
         ]);
 
-        $cliente = new cliente;
+        $cliente = new Cliente;
         $cliente->email = $request->input('email');
         $senha = $request->input('password');
         $senha = Hash::make($senha);
