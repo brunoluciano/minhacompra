@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Empresa;
 
@@ -65,7 +66,8 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        //
+        $empresa = Empresa::with('estado')->findOrFail($id);
+        return $empresa;
     }
 
     /**
@@ -77,7 +79,27 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
+            'cnpj' => ['required', 'size:14'],
+            'telefone' => 'required',
+            'endereco' => 'required',
+            'numero' => ['required', 'min:1'],
+            'bairro' => 'required',
+            'cidade' => 'required',
+            'estado_id' => 'required',
+            'cep' => ['required', 'size:8'],
+        ]);
+
+        $requestData = $request->all();
+        if (!$request->file() == null) {
+            $requestData['logo_url'] = $request->file('imgLogo')->store('empresa/' . $request->input('cnpj') . '/logo');
+        }
+        $empresa = Empresa::findOrFail($id);
+        $empresa->update($requestData);
+        
+        return $empresa;
+
     }
 
     /**
@@ -88,13 +110,22 @@ class EmpresaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $empresa = Empresa::findOrFail($id);
+        Storage::delete($empresa->logo_url);
+        $empresa->delete();
+        return $empresa;
     }
 
-    public function getLogoImage($filename)
+    public function getLogoImage($id)
     {
-        $path = public_path() . '/storage/empresa/82205021000108/logo/' . $filename;
-        // dd($path);
+        $empresa = Empresa::findOrFail($id);
+
+        $path = public_path() . '/storage/' . $empresa->logo_url;
         return Response::download($path);
+    }
+
+    public function teste(Request $request, $id) {
+        $requestData = $request->all();
+        return $requestData;
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,9 @@ Route::resource('estado', 'Api\\EstadoController');
 Route::resource('pessoa', 'Api\\PessoaController');
 Route::resource('cliente', 'Api\\ClienteController');
 Route::resource('empresa', 'Api\\EmpresaController');
-Route::get('{filename}', 'Api\\EmpresaController@getLogoImage');
+Route::get('empresa/{empresa}/images/logo', 'Api\\EmpresaController@getLogoImage');
+
+Route::prefix('empresa/{empresa}/images/banner')->group(function () {
+    Route::get('/', 'Api\\BannerController@index');
+});
 // Route::resource('teste', 'Teste');
