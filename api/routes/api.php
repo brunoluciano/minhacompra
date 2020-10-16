@@ -27,4 +27,5 @@ Route::resource('estado', 'Api\\EstadoController');
 Route::resource('pessoa', 'Api\\PessoaController');
 Route::resource('cliente', 'Api\\ClienteController');
 Route::resource('empresa', 'Api\\EmpresaController');
+Route::get('{filename}', 'Api\\EmpresaController@getLogoImage');
 // Route::resource('teste', 'Teste');

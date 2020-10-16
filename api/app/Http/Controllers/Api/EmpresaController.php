@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 use App\Models\Empresa;
 
@@ -47,11 +48,11 @@ class EmpresaController extends Controller
         // $empresa->save();
 
         $requestData = $request->all();
-        if(!$request->file() == null) {
-            $requestData['logo_url'] = $request->file('imgLogo')->store('empresa/'. $request->input('cnpj') . '/logo');
-        }        
+        if (!$request->file() == null) {
+            $requestData['logo_url'] = $request->file('imgLogo')->store('empresa/' . $request->input('cnpj') . '/logo');
+        }
         $empresa = Empresa::create($requestData);
-        
+
 
         return $empresa;
     }
@@ -88,5 +89,12 @@ class EmpresaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getLogoImage($filename)
+    {
+        $path = public_path() . '/storage/empresa/82205021000108/logo/' . $filename;
+        // dd($path);
+        return Response::download($path);
     }
 }
