@@ -90,16 +90,16 @@ class EmpresaController extends Controller
             'estado_id' => 'required',
             'cep' => ['required', 'size:8'],
         ]);
+        $empresa = Empresa::findOrFail($id);
 
         $requestData = $request->all();
         if (!$request->file() == null) {
+            Storage::delete($empresa->logo_url);
             $requestData['logo_url'] = $request->file('imgLogo')->store('empresa/' . $request->input('cnpj') . '/logo');
         }
-        $empresa = Empresa::findOrFail($id);
         $empresa->update($requestData);
-        
-        return $empresa;
 
+        return $empresa;
     }
 
     /**
@@ -124,7 +124,8 @@ class EmpresaController extends Controller
         return Response::download($path);
     }
 
-    public function teste(Request $request, $id) {
+    public function teste(Request $request, $id)
+    {
         $requestData = $request->all();
         return $requestData;
     }

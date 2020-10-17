@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Estado;
+use App\Models\UnidadeMedidaProduto;
 
-class EstadoController extends Controller
+class UnidadeMedidaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class EstadoController extends Controller
      */
     public function index()
     {
-        $estados = Estado::all();
-        return $estados;
+        $medidas = UnidadeMedidaProduto::all();
+        return $medidas;
     }
 
     /**
@@ -28,7 +28,7 @@ class EstadoController extends Controller
      */
     public function show($id)
     {
-        $estado = Estado::findOrFail($id);
-        return $estado;
+        $medida = UnidadeMedidaProduto::findOrFail($id);
+        return $medida;
     }
 }
