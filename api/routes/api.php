@@ -28,10 +28,17 @@ Route::resource('cliente', 'Api\\ClienteController');
 Route::resource('empresa', 'Api\\EmpresaController');
 
 Route::prefix('empresa/{empresa}')->group(function () {
+    Route::resource('venda', 'Api\\VendaController');
+    Route::resource('usuario', 'Api\\UsuarioController');
+
     Route::resource('departamento', 'Api\\DepartamentoController');
     Route::resource('categoria', 'Api\\CategoriaController');
     Route::resource('marca', 'Api\\MarcaController');
     Route::resource('produto', 'Api\\ProdutoController');
+
+    Route::prefix('produto/{produto}')->group(function () {
+        Route::resource('promocao', 'Api\\PromocaoProdutoController');
+    });
 
     Route::prefix('images')->group(function () {
         Route::get('logo', 'Api\\EmpresaController@getLogoImage');
@@ -45,3 +52,7 @@ Route::get('estado', 'Api\\EstadoController@index')->name('estado.index');
 Route::get('estado/{id}', 'Api\\EstadoController@show')->name('estado.show');
 Route::get('unidademedida', 'Api\\UnidadeMedidaController@index')->name('unidademedida.index');
 Route::get('unidademedida/{id}', 'Api\\UnidadeMedidaController@show')->name('unidademedida.show');
+Route::get('tipousuario', 'Api\\TipoUsuarioController@index')->name('tipousuario.index');
+Route::get('tipousuario/{id}', 'Api\\TipoUsuarioController@show')->name('tipousuario.show');
+Route::get('statusvenda', 'Api\\StatusVendaController@index')->name('statusvenda.index');
+Route::get('statusvenda/{id}', 'Api\\StatusVendaController@show')->name('statusvenda.show');
