@@ -9,12 +9,12 @@
 
         <q-card-section class="row q-pt-none">
           <div class="col">
-            <q-form @submit="onSubmit" @reset="onReset">
+            <q-form @submit.prevent="onSubmit" @reset="onReset">
               <div class="q-col-gutter-x-sm q-col-gutter-y-sm row items-start">
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.nome"
+                  v-model="pessoa.nome"
                   label="Nome"
                   type="text"
                   color="cyan-7"
@@ -23,7 +23,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.email"
+                  v-model="cliente.email"
                   label="E-mail"
                   type="email"
                   color="cyan-7"
@@ -32,7 +32,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.password"
+                  v-model="cliente.password"
                   label="Senha"
                   type="password"
                   color="cyan-7"
@@ -41,7 +41,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.cnf_password"
+                  v-model="cliente.cnf_password"
                   label="Confirmar senha"
                   type="password"
                   color="cyan-7"
@@ -54,19 +54,24 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.cpf"
+                  v-model="pessoa.cpf"
                   label="CPF"
                   type="text"
                   color="cyan-7"
                   mask="###.###.###-##"
+                  unmasked-value
                   class="col-12 col-md-3"
                 />
                 <q-select
                   rounded
                   outlined
-                  v-model="cadastro.sexo"
+                  v-model="pessoa.sexo"
                   :options="options.sexo"
+                  option-label="descricao"
+                  option-value="id"
                   label="Sexo"
+                  emit-value
+                  map-options
                   color="cyan-7"
                   transition-show="jump-down"
                   transition-hide="jump-up"
@@ -75,7 +80,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.endereco"
+                  v-model="pessoa.endereco"
                   label="Endereço"
                   type="text"
                   color="cyan-7"
@@ -84,7 +89,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model.number="cadastro.numero"
+                  v-model.number="pessoa.numero"
                   label="Número"
                   type="number"
                   color="cyan-7"
@@ -97,7 +102,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.bairro"
+                  v-model="pessoa.bairro"
                   label="Bairro"
                   type="text"
                   color="cyan-7"
@@ -106,7 +111,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.complemento"
+                  v-model="pessoa.complemento"
                   label="Complemento"
                   type="text"
                   color="cyan-7"
@@ -115,7 +120,7 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.cidade"
+                  v-model="pessoa.cidade"
                   label="Cidade"
                   type="text"
                   color="cyan-7"
@@ -124,9 +129,13 @@
                 <q-select
                   rounded
                   outlined
-                  v-model="cadastro.uf"
-                  :options="options.uf"
+                  v-model="pessoa.estado_id"
+                  :options="options.estado"
+                  option-label="descricao"
+                  option-value="id"
                   label="Estado"
+                  emit-value
+                  map-options
                   color="cyan-7"
                   transition-show="jump-down"
                   transition-hide="jump-up"
@@ -139,31 +148,32 @@
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.cep"
+                  v-model="pessoa.cep"
                   label="CEP"
                   type="text"
                   color="cyan-7"
                   mask="#####-###"
+                  unmasked-value
                   class="col-12 col-md-4"
                 />
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.telefone"
+                  v-model="pessoa.telefone"
                   label="Telefone"
                   type="text"
                   color="cyan-7"
                   mask="(##) #####-####"
+                  unmasked-value
                   class="col-12 col-md-4"
                 />
                 <q-input
                   rounded
                   outlined
-                  v-model="cadastro.nascimento"
+                  v-model="pessoa.nascimento"
                   label="Data de nascimento"
                   type="text"
                   color="cyan-7"
-                  mask="####/##/##"
                   class="col-12 col-md-4"
                 >
                   <template v-slot:append>
@@ -173,7 +183,11 @@
                         transition-show="jump-down"
                         transition-hide="jump-up"
                       >
-                        <q-date v-model="cadastro.nascimento" color="cyan-7">
+                        <q-date
+                          v-model="pessoa.nascimento"
+                          color="cyan-7"
+                          mask="YYYY-MM-DD"
+                        >
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
@@ -196,6 +210,7 @@
                     label="Confirmar"
                     type="submit"
                     color="secondary"
+                    v-close-popup
                   />
                   <q-btn
                     outline
@@ -216,31 +231,29 @@
 </template>
 
 <script>
+import Pessoa from "../../../domain/cliente/Pessoa";
+import Cliente from "../../../domain/cliente/Cliente";
+
 export default {
   props: ["mostraModal"],
 
   data() {
     return {
-      cadastro: {
-        nome: "",
-        email: "",
-        password: "",
-        cnf_password: "",
-        cpf: "",
-        sexo: "",
-        endereco: "",
-        numero: "",
-        bairro: "",
-        complemento: "",
-        estado: "",
-        cep: "",
-        telefone: "",
-        nascimento: "",
-      },
+      pessoa: new Pessoa(),
+      cliente: new Cliente(),
 
       options: {
-        sexo: ["Masculino", "Feminino"],
-        uf: ["Espírito Santo", "Minas Gerais", "Rio de Janeiro", "São Paulo"],
+        sexo: [
+          {
+            id: "M",
+            descricao: "Masculino",
+          },
+          {
+            id: "F",
+            descricao: "Femino",
+          },
+        ],
+        estado: [],
       },
     };
   },
@@ -250,6 +263,59 @@ export default {
       if (!this.mostraModal) {
         this.$emit("fecharModal", this.mostraModal);
       }
+    },
+  },
+
+  created() {
+    this.$http
+      .get("estado")
+      .then((res) => res.json())
+      .then(
+        (estados) => (this.options.estado = estados),
+        (err) => console.log(err)
+      );
+  },
+
+  methods: {
+    onSubmit() {
+      this.$http
+        .post("pessoa", this.pessoa)
+        .then((res) => res.json())
+        .then(
+          (pessoaInserida) => {
+            this.pessoa.id = pessoaInserida.id;
+            this.cliente.pessoa_id = pessoaInserida.id;
+
+            this.$http.post("cliente", this.cliente).then(
+              (res) => {
+                res.json();
+                this.successNotify();
+              },
+              (err) => {
+                console.log(err);
+                this.errorNotify();
+              }
+            );
+          },
+          (err) => console.log(err)
+        );
+    },
+
+    successNotify() {
+      this.$q.notify({
+        progress: true,
+        position: "top",
+        type: "positive",
+        message: "Conta criada com sucesso! Faça o seu login agora mesmo.",
+      });
+    },
+    errorNotify() {
+      this.$q.notify({
+        progress: true,
+        position: "top",
+        type: "negative",
+        message: "Erro ao criar conta! Tente novamente.",
+      });
     },
   },
 };

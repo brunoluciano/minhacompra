@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import './quasar'
 
+Vue.use(VueResource)
 Vue.use(VueRouter)
+
+Vue.http.options.root = 'http://localhost:8000/api';
 
 const router = new VueRouter({
     routes,
