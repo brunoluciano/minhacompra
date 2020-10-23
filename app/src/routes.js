@@ -6,6 +6,9 @@ const IndexCliente = () =>
     import ('./components/main/cliente/Index.vue');
 const PerfilCliente = () =>
     import ('./components/main/cliente/Perfil.vue');
+const IndexLoja = () =>
+    import ('./components/main/loja/IndexLoja.vue');
+
 
 const IndexSistema = () =>
     import ('./components/app/Index.vue');
@@ -24,14 +27,30 @@ export const routes = [{
         component: IndexCliente,
         name: 'user',
         children: [{
-            path: 'buscarLojas',
+            path: 'buscarLojas?cep=:cep',
             component: BuscarLojas,
-            name: 'buscarlojas'
+            name: 'buscarlojas',
+            props: true
         }, {
             path: 'perfil',
             component: PerfilCliente,
             name: 'perfil'
         }, ]
+    },
+    {
+        path: '/loja/:id',
+        component: IndexLoja,
+        name: 'loja',
+        // children: [{
+        //     path: 'buscarLojas?cep=:cep',
+        //     component: BuscarLojas,
+        //     name: 'buscarlojas',
+        //     props: true
+        // }, {
+        //     path: 'perfil',
+        //     component: PerfilCliente,
+        //     name: 'perfil'
+        // }, ]
     },
     {
         path: '/app',

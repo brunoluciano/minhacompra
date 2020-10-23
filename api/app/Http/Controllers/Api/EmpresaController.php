@@ -26,7 +26,7 @@ class EmpresaController extends Controller
     public function getByCEP(Request $request)
     {
         $cep = $request->Input('cep');
-        $empresas = Empresa::with('estado')->where('cep', $cep)->get();
+        $empresas = Empresa::with('estado')->where('cep', $cep)->orderBy('nome')->get();
         return $empresas;
     }
 
