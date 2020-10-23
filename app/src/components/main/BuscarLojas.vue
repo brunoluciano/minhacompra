@@ -16,9 +16,14 @@
             rounded
             outlined
             dark
+            v-model="buscaCep.cep"
+            debounce="500"
+            mask="#####-###"
+            unmasked-value
             color="blue-5"
             bg-color="blue-grey-10"
             style="opacity: 0.9"
+            v-on:input="buscarLojas"
           >
             <template v-slot:append>
               <q-btn
@@ -36,13 +41,16 @@
       </div>
       <br />
       <div class="row q-col-gutter-x-xl q-col-gutter-y-lg">
-        <div class="col-12 col-sm-6 col-md-3" v-for="n in 12" :key="n">
+        <div class="col-12 col-sm-6 col-md-4" v-for="loja in lojas" :key="loja">
           <q-card class="bg-grey-2 shadow-3 lista-card-loja q-pa-xs" bordered>
             <q-item>
               <q-item-section avatar>
-                <q-avatar class="shadow-3" size="50px">
-                  <img
-                    src="https://static-images.ifood.com.br/image/upload//logosgde/2959111d-2628-46c6-9fb5-a42a710ad29a/201912201539_o5xi_i.png"
+                <q-avatar class="shadow-3" size="60px">
+                  <!-- <img :src="loja.imgUrl" /> -->
+                  <q-img
+                    :src="loja.imgUrl"
+                    transition="fade"
+                    spinner-color="white"
                   />
                 </q-avatar>
               </q-item-section>
@@ -50,19 +58,34 @@
               <q-item-section>
                 <q-item-label class="ellipsis">
                   <span class="text-h5 text-weight-bold text-grey-7"
-                    >Supermercado Supermercado
+                    >{{ loja.nome }}
 
                     <q-tooltip anchor="top middle" self="center middle">
-                      Supermercado Supermercado
+                      {{ loja.nome }}
                     </q-tooltip>
                   </span>
                 </q-item-label>
                 <q-item-label caption
-                  >Av. Brasil, 123 - Bairro <br />
-                  São Paulo - SP</q-item-label
+                  >{{ loja.endereco }}, {{ loja.numero }} - {{ loja.bairro }}
+                  <br />
+                  {{ loja.estado.descricao }} -
+                  {{ loja.estado.sigla }}</q-item-label
                 >
               </q-item-section>
             </q-item>
+          </q-card>
+        </div>
+      </div>
+
+      <div class="row q-my-lg" v-if="!lojasEncontradas">
+        <div class="col-12 text-center">
+          <q-card class="bg-yellow-2 shadow-3 q-pa-md lista-card-loja" bordered>
+            <div class="text-h5 text-grey-8" v-if="!buscaCep.loadingState">
+              Nenhum loja encontrada!
+            </div>
+            <div class="text-h5 text-grey-8" v-else>
+              <q-spinner size="2em" />
+            </div>
           </q-card>
         </div>
       </div>
@@ -74,8 +97,41 @@
 export default {
   data() {
     return {
-      n: "",
+      buscaCep: {
+        cep: "",
+        loadingState: false,
+      },
+      lojas: [],
+      lojasEncontradas: false,
     };
+  },
+
+  methods: {
+    buscarLojas() {
+      this.buscaCep.loadingState = true;
+      this.$http
+        .post("empresa/cep", this.buscaCep)
+        .then((res) => res.json())
+        .then(
+          (lojas) => {
+            this.buscaCep.loadingState = false;
+            this.lojasEncontradas = lojas != "" ? true : false;
+
+            this.lojas = lojas;
+            console.log(this.lojas);
+
+            // buscando respectiva imagem da empresa e atribuindo a um atributo
+            this.lojas.forEach((loja) => {
+              let url = `${this.$http.options.root}/empresa/${loja.id}/images/logo`;
+              loja.imgUrl = url;
+            });
+          },
+          (err) => {
+            console.log(err);
+            this.lojasEncontradas = false;
+          }
+        );
+    },
   },
 };
 </script>

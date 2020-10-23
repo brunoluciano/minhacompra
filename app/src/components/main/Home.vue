@@ -20,6 +20,9 @@
               rounded
               outlined
               dark
+              v-model="buscaCep.cep"
+              mask="#####-###"
+              unmasked-value
               color="orange"
               bg-color="dark"
               style="opacity: 0.9"
@@ -134,6 +137,10 @@ export default {
 
   data() {
     return {
+      buscaCep: {
+        cep: "",
+      },
+
       image: Image,
       card1: Card1,
       card2: Card2,

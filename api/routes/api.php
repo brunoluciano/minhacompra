@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::resource('pessoa', 'Api\\PessoaController');
 Route::resource('cliente', 'Api\\ClienteController');
 Route::resource('empresa', 'Api\\EmpresaController');
+Route::post('empresa/cep', 'Api\\EmpresaController@getByCEP');
 
 Route::prefix('empresa/{empresa}')->group(function () {
     Route::resource('venda', 'Api\\VendaController');

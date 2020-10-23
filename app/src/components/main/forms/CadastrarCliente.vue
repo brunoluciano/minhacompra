@@ -290,6 +290,8 @@ export default {
               (res) => {
                 res.json();
                 this.successNotify();
+                this.pessoa = new Pessoa();
+                this.cliente = new Cliente();
               },
               (err) => {
                 console.log(err);

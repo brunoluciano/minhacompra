@@ -103,21 +103,21 @@
     </q-dialog>
 
     <!-- MODAL CADASTRO -->
-    <!-- <cadastrar-cliente
+    <modal-cadastro-empresa
       :mostraModal="modal.cadastro"
       @fecharModal="fecharModalCadastro"
-    /> -->
+    />
   </div>
 </template>
 
 <script>
-// import CadastrarCliente from "./CadastrarCliente.vue";
+import ModalCadastroEmpresa from "./ModalCadastroEmpresa.vue";
 
 export default {
   props: ["mostraModal"],
 
   components: {
-    // CadastrarCliente,
+    ModalCadastroEmpresa,
   },
 
   data() {

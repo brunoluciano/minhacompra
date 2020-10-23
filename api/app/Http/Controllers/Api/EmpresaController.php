@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Empresa;
+use Symfony\Component\Console\Input\Input;
 
 class EmpresaController extends Controller
 {
@@ -19,6 +20,13 @@ class EmpresaController extends Controller
     public function index()
     {
         $empresas = Empresa::with('estado')->get();
+        return $empresas;
+    }
+
+    public function getByCEP(Request $request)
+    {
+        $cep = $request->Input('cep');
+        $empresas = Empresa::with('estado')->where('cep', $cep)->get();
         return $empresas;
     }
 
@@ -111,7 +119,7 @@ class EmpresaController extends Controller
     public function destroy($id)
     {
         $empresa = Empresa::findOrFail($id);
-        Storage::delete($empresa->logo_url);
+        Storage::deleteDirectory('empresa/' . $empresa->cnpj);
         $empresa->delete();
         return $empresa;
     }
