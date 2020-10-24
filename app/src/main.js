@@ -4,9 +4,11 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import './quasar'
+import VueSplide from '@splidejs/vue-splide'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
+Vue.use(VueSplide)
 
 Vue.http.options.root = 'http://localhost:8000/api';
 

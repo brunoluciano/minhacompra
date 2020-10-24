@@ -16,7 +16,7 @@ class DepartamentoController extends Controller
      */
     public function index($empresa_id)
     {
-        $departamentos = DepartamentoProduto::with('empresa')->where('empresa_id', $empresa_id)->get();
+        $departamentos = DepartamentoProduto::with('empresa')->where('empresa_id', $empresa_id)->orderBy('descricao')->get();
         return $departamentos;
     }
 
