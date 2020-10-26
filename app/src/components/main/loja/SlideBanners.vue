@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="shadow-3 rounded-borders bg-blue-grey-1">
     <splide :slides="banners" :options="options" @splide:moved="moved">
       <splide-slide v-for="banner in banners" :key="banner.id">
         <q-img

@@ -169,7 +169,7 @@ export default {
     buscarLojas() {
       this.$refs.formBuscarLojas.validate().then(() => {
         this.$router.push({
-          name: "buscarlojas",
+          name: "buscarlojasbycep",
           params: {
             cep: this.buscaCep.cep,
           },

@@ -30,10 +30,16 @@ export const routes = [{
         component: IndexCliente,
         name: 'user',
         children: [{
-            path: 'buscarLojas/:cep',
+            path: 'buscarLojas',
             component: BuscarLojas,
             name: 'buscarlojas',
-            props: true
+            props: true,
+            children: [{
+                path: ':cep',
+                component: BuscarLojas,
+                name: 'buscarlojasbycep',
+                props: true,
+            }]
         }, {
             path: 'perfil',
             component: PerfilCliente,

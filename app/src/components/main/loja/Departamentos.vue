@@ -6,12 +6,11 @@
       icon="list"
       label="Departamentos"
       class="full-width"
-      @click="onClick"
     />
     <q-list
       bordered
       separator
-      class="shadow-2 list-departamentos rounded-bottoms"
+      class="shadow-2 list-departamentos rounded-bottoms text-grey-8"
     >
       <q-item
         clickable
@@ -27,25 +26,7 @@
 
 <script>
 export default {
-  props: ["idEmpresa"],
-
-  data() {
-    return {
-      departamentos: [],
-    };
-  },
-
-  created() {
-    this.$http
-      .get(`empresa/${this.idEmpresa}/departamento`)
-      .then((res) => res.json())
-      .then(
-        (departamentos) => {
-          this.departamentos = departamentos;
-        },
-        (err) => console.log(err)
-      );
-  },
+  props: ["departamentos"],
 };
 </script>
 
