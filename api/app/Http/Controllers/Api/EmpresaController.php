@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Empresa;
+use App\Models\DepartamentoProduto;
 use Symfony\Component\Console\Input\Input;
 
 class EmpresaController extends Controller
@@ -50,18 +51,29 @@ class EmpresaController extends Controller
             'cep' => ['required', 'size:8'],
         ]);
 
-        // $empresa = new Empresa;
-        // $empresa->email = $request->input('email');
-        // $empresa->pessoa_id = $request->input('pessoa_id');
-
-        // $empresa->save();
-
         $requestData = $request->all();
         if (!$request->file() == null) {
             $requestData['logo_url'] = $request->file('imgLogo')->store('empresa/' . $request->input('cnpj') . '/logo');
         }
         $empresa = Empresa::create($requestData);
-
+        $departamentosPadrao = [
+            "Alimentos",
+            "Bebidas",
+            "Açougue",
+            "Congelados",
+            "Frios & Laticínios",
+            "Hortifrutti",
+            "Padaria",
+            "Doces & Sobremesas",
+            "Perfumaria & Higiene",
+            "Limpeza",
+        ];
+        foreach ($departamentosPadrao as $departamento) {
+            $d = new DepartamentoProduto();
+            $d->empresa_id = $empresa->id;
+            $d->descricao = $departamento;
+            DepartamentoProduto::create($d);
+        }
 
         return $empresa;
     }

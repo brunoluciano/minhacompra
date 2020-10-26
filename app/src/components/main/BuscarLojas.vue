@@ -27,7 +27,7 @@
                         <q-item>
                             <q-item-section avatar>
                                 <q-avatar class="shadow-3" size="60px">
-                                    <q-img :src="loja.imgUrl" transition="fade" spinner-color="grey" />
+                                    <q-img :src="loja.imgUrl" transition="fade" spinner-color="grey" class="image-card" />
                                 </q-avatar>
                             </q-item-section>
 
@@ -127,10 +127,24 @@ export default {
 .lista-card-loja:hover {
     transition: ease 0.3s;
     background-color: #ececec;
-    border: 3px solid #9eb5ca;
+    border: 3px solid #77b6a7;
     -moz-transform: scale(1.08);
     -webkit-transform: scale(1.08);
     transform: scale(1.08);
     overflow: hidden;
+}
+
+.image-card {
+    display: block;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.lista-card-loja:hover .image-card {
+    cursor: pointer;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 </style>
