@@ -34,4 +34,9 @@ class Produto extends Model
     {
         return $this->belongsTo('App\Models\UnidadeMedidaProduto');
     }
+
+    public function promocao()
+    {
+        return $this->hasOne('App\Models\PromocaoProduto');
+    }
 }

@@ -24,6 +24,8 @@ class ProdutoController extends Controller
         return $produtos;
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -127,5 +129,23 @@ class ProdutoController extends Controller
         $produto = Produto::where('empresa_id', $empresa_id)->findOrFail($id);
         $path = public_path() . '/storage/' . $produto->imagem_url;
         return Response::download($path);
+    }
+
+    public function comPromocao($empresa_id)
+    {
+        $produtos = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida', 'promocao'])
+            ->where('empresa_id', $empresa_id)
+            ->where('promocao_ativa', true)
+            ->get();
+        return $produtos;
+    }
+
+    public function semPromocao($empresa_id)
+    {
+        $produtos = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida'])
+            ->where('empresa_id', $empresa_id)
+            ->where('promocao_ativa', false)
+            ->get();
+        return $produtos;
     }
 }

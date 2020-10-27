@@ -56,6 +56,7 @@ class EmpresaController extends Controller
             $requestData['logo_url'] = $request->file('imgLogo')->store('empresa/' . $request->input('cnpj') . '/logo');
         }
         $empresa = Empresa::create($requestData);
+
         $departamentosPadrao = [
             "Alimentos",
             "Bebidas",
@@ -69,13 +70,9 @@ class EmpresaController extends Controller
             "Limpeza",
         ];
         foreach ($departamentosPadrao as $departamento) {
-            $d = new DepartamentoProduto();
-            $d->empresa_id = $empresa->id;
-            $d->descricao = $departamento;
-            DepartamentoProduto::create($d);
+            DepartamentoProduto::create(['empresa_id' => $empresa->id, 'descricao' => $departamento]);
         }
-
-        return $empresa;
+        return $departamentosPadrao;
     }
 
     /**
