@@ -47,7 +47,7 @@
         <!-- </div> -->
       </div>
       <div class="q-mx-md q-pa-lg bg-white shadow-4 row-loja-content">
-        <router-view></router-view>
+        <router-view> </router-view>
       </div>
     </main-menu>
   </div>

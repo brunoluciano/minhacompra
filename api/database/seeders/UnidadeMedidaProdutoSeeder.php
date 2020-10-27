@@ -102,18 +102,24 @@ class UnidadeMedidaProdutoSeeder extends Seeder
             14 =>
             array(
                 'id' => '15',
-                'descricao' => 'Pacote',
-                'sigla' => 'PT',
+                'descricao' => 'Mililitro',
+                'sigla' => 'ML',
             ),
             15 =>
             array(
                 'id' => '16',
-                'descricao' => 'Peça',
-                'sigla' => 'PC',
+                'descricao' => 'Pacote',
+                'sigla' => 'PT',
             ),
             16 =>
             array(
                 'id' => '17',
+                'descricao' => 'Peça',
+                'sigla' => 'PC',
+            ),
+            17 =>
+            array(
+                'id' => '18',
                 'descricao' => 'Unidade',
                 'sigla' => 'UN',
             ),

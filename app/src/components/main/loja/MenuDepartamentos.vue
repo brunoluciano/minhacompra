@@ -18,7 +18,9 @@
         v-for="departamento in departamentos"
         :key="departamento.id"
       >
-        <q-item-section>{{ departamento.descricao }}</q-item-section>
+        <q-item-section @click="irParaDepartamento(departamento.id)">{{
+          departamento.descricao
+        }}</q-item-section>
       </q-item>
     </q-list>
   </div>
@@ -27,6 +29,17 @@
 <script>
 export default {
   props: ["departamentos"],
+
+  methods: {
+    irParaDepartamento(id) {
+      this.$router.push({
+        name: "departamento",
+        params: {
+          idDepartamento: id,
+        },
+      });
+    },
+  },
 };
 </script>
 

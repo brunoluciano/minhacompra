@@ -11,6 +11,8 @@ const IndexLoja = () =>
     import ('./components/main/loja/Index.vue');
 const MainLoja = () =>
     import ('./components/main/loja/Main.vue');
+const Departamento = () =>
+    import ('./components/main/loja/Departamento');
 
 
 const IndexSistema = () =>
@@ -44,7 +46,7 @@ export const routes = [{
             path: 'perfil',
             component: PerfilCliente,
             name: 'perfil'
-        }, ]
+        }]
     },
     {
         path: '/loja',
@@ -53,9 +55,14 @@ export const routes = [{
         children: [{
             path: ':id',
             component: MainLoja,
-            name: 'loja',
-            props: true
-        }]
+            name: 'lojaMain',
+            props: true,
+        },
+        {
+            path: 'departamento/:idDepartamento',
+            component: Departamento,
+            name: 'departamento'
+        },]
     },
     {
         path: '/app',

@@ -18,10 +18,10 @@ class CreateProdutosTable extends Migration
             $table->string('descricao');
             $table->unsignedBigInteger('empresa_id');
             $table->unsignedBigInteger('departamento_id');
-            $table->unsignedBigInteger('categoria_id');
-            $table->unsignedBigInteger('marca_id');
-            $table->unsignedBigInteger('unidade_medida_id');
-            $table->double('unidade');
+            $table->unsignedBigInteger('categoria_id')->nullable();
+            $table->unsignedBigInteger('marca_id')->nullable();
+            $table->unsignedBigInteger('unidade_medida_id')->nullable();
+            $table->double('unidade')->nullable();
             $table->string('cod_barras');
             $table->integer('estoque_minimo');
             $table->integer('estoque_atual');

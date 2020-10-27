@@ -3,7 +3,9 @@
     <div v-if="loadedComponent">
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-3" v-if="departamentos != ''">
-          <departamentos :departamentos="departamentos"></departamentos>
+          <menu-departamentos
+            :departamentos="departamentos"
+          ></menu-departamentos>
         </div>
         <div class="col-12 col-md-9" v-if="banners != ''">
           <slide-banners :banners="banners"></slide-banners>
@@ -36,13 +38,13 @@
 
 <script>
 import SlideBanners from "./SlideBanners.vue";
-import Departamentos from "./Departamentos.vue";
+import MenuDepartamentos from "./MenuDepartamentos.vue";
 import PainelProdutos from "./PainelProdutos.vue";
 
 export default {
   components: {
     SlideBanners,
-    Departamentos,
+    MenuDepartamentos,
     PainelProdutos,
   },
 
