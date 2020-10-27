@@ -22,4 +22,8 @@ Vue.config.productionTip = false
 new Vue({
     router,
     render: h => h(App),
+
+    data: {
+        qtdItensCarrinho: 0,
+    }
 }).$mount('#app')
