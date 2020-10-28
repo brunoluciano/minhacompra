@@ -40,6 +40,7 @@ Route::prefix('empresa/{empresa}')->group(function () {
     Route::prefix('produtos')->group(function () {
         Route::get('comPromocao', 'Api\\ProdutoController@comPromocao')->name('produto.compromocao');
         Route::get('semPromocao', 'Api\\ProdutoController@semPromocao')->name('produto.sempromocao');
+        Route::get('departamento/{id}', 'Api\\ProdutoController@getByDepartamento')->name('produto.departamento');
     });
 
     Route::prefix('produto/{produto}')->group(function () {

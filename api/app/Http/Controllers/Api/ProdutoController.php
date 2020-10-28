@@ -24,7 +24,14 @@ class ProdutoController extends Controller
         return $produtos;
     }
 
-
+    public function getByDepartamento($empresa_id, $departamento_id)
+    {
+        $produtos = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida', 'promocao'])
+            ->where('empresa_id', $empresa_id)
+            ->where('departamento_id', $departamento_id)
+            ->get();
+        return $produtos;
+    }
 
     /**
      * Store a newly created resource in storage.

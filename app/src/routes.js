@@ -53,16 +53,18 @@ export const routes = [{
         component: IndexLoja,
         name: 'loja',
         children: [{
-            path: ':id',
-            component: MainLoja,
-            name: 'lojaMain',
-            props: true,
-        },
-        {
-            path: 'departamento/:idDepartamento',
-            component: Departamento,
-            name: 'departamento'
-        },]
+                path: ':id',
+                component: MainLoja,
+                name: 'lojaMain',
+                props: true,
+            },
+            {
+                path: ':loja/departamento/:departamento',
+                component: Departamento,
+                name: 'departamento',
+                props: true,
+            },
+        ]
     },
     {
         path: '/app',
