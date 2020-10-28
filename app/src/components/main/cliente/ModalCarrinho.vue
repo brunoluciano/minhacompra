@@ -23,8 +23,8 @@
           </div>
           <q-separator color="white" class="q-mb-md" />
           <div class="col-12">
-            <q-markup-table dense separator="cell" class="rounded-table">
-              <thead class="text-center">
+            <q-markup-table dense separator="cell" class="table-carrinho">
+              <thead class="text-center sticky-head">
                 <tr class="text-white bg-teal text-uppercase">
                   <th class="bold custom-font">Produto</th>
                   <th class="bold custom-font">Preço</th>
@@ -33,7 +33,7 @@
                 </tr>
               </thead>
               <tbody class="text-center text-grey-8">
-                <tr v-for="n in 5" :key="n">
+                <tr v-for="n in 10" :key="n">
                   <td class="text-center">
                     <q-list>
                       <q-item>
@@ -168,8 +168,11 @@ export default {
   font-family: "Oswald", sans-serif;
 }
 
-.rounded-table {
+.table-carrinho {
   border-radius: 20px 20px 0px 0px;
+  max-height: 45vh !important;
+  overflow-y: scroll;
+  overflow-x: auto;
 }
 
 .rounded-buttons {
