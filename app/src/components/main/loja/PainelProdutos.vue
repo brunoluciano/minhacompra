@@ -18,14 +18,28 @@
           borderTop: `2px solid ${painel.tituloCor2}`,
         }"
       >
-        <div class="row q-col-gutter-x-lg q-col-gutter-y-xl q-pa-md">
+        <div v-if="produtos != ''">
+          <div class="row q-col-gutter-x-lg q-col-gutter-y-xl q-pa-md">
+            <div
+              class="col-12 col-sm-6 col-md-3"
+              v-for="produto in produtos"
+              :key="produto.id"
+              :class="painel.col_size"
+            >
+              <card-produto :produto="produto"></card-produto>
+            </div>
+          </div>
+        </div>
+        <div v-else>
           <div
-            class="col-12 col-sm-6 col-md-3"
-            v-for="produto in produtos"
-            :key="produto.id"
-            :class="painel.col_size"
+            class="row justify-center items-center q-pa-lg row-nenhum-produto"
           >
-            <card-produto :produto="produto"></card-produto>
+            <div class="col-12 q-pa-lg text-center">
+              <div class="text-h4 text-blue-grey-7 custom-font">
+                <q-icon name="mdi-emoticon-sad-outline" /> Nenhum produto
+                encontrado!
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -46,6 +60,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+
 .btn-titulo-painel {
   border-radius: 20px 20px 0px 0px;
 }
@@ -57,5 +73,13 @@ export default {
 .bg-departamentos {
   background: #2970a4;
   border-top: 2px solid #2970a4;
+}
+
+.row-nenhum-produto {
+  min-height: 40vh;
+}
+
+.custom-font {
+  font-family: "Oswald", sans-serif;
 }
 </style>

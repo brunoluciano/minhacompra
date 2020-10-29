@@ -158,14 +158,24 @@ export default {
     const lojaId = this.$route.params.loja;
     const departamentoId = this.$route.params.departamento;
     this.$http
-      .get(`empresa/${lojaId}/produtos/departamento/${departamentoId}`)
+      .get(`empresa/${lojaId}/departamento/${departamentoId}`)
       .then((res) => res.json())
       .then(
-        (produtos) => {
-          this.painel.produtos = produtos;
-          this.produtrosFiltrados = produtos;
-          this.painel.titulo = produtos[0].departamento.descricao;
-          this.loadedComponent = true;
+        (departamento) => {
+          this.painel.titulo = departamento.descricao;
+
+          this.$http
+            .get(`empresa/${lojaId}/produtos/departamento/${departamentoId}`)
+            .then((res) => res.json())
+            .then(
+              (produtos) => {
+                this.loadedComponent = true;
+                this.painel.produtos = produtos;
+                this.produtrosFiltrados = produtos;
+                this.painel.titulo = produtos[0].departamento.descricao;
+              },
+              (err) => console.log(err)
+            );
         },
         (err) => console.log(err)
       );

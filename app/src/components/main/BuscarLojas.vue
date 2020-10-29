@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col text-center">
         <div class="text-h3 q-my-lg text-grey-7">
-          Selecione um supermercado próximo a você!
+          Selecione um supermercado próximo de você!
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@
                   <q-item-label caption
                     >{{ loja.endereco }}, {{ loja.numero }} - {{ loja.bairro }}
                     <br />
-                    {{ loja.estado.descricao }} -
+                    {{ loja.cidade }} -
                     {{ loja.estado.sigla }}
                   </q-item-label>
                 </q-item-section>
