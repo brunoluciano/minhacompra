@@ -72,7 +72,7 @@ class EmpresaController extends Controller
         foreach ($departamentosPadrao as $departamento) {
             DepartamentoProduto::create(['empresa_id' => $empresa->id, 'descricao' => $departamento]);
         }
-        return $departamentosPadrao;
+        return $empresa;
     }
 
     /**

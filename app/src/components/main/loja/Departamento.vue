@@ -211,6 +211,9 @@ export default {
     removerFiltros() {
       this.produtrosFiltrados = this.painel.produtos;
       this.filtro.ativo = false;
+      this.filtro.preco.min = 0;
+      this.filtro.preco.max = 200;
+      this.filtro.promocao.ativa = false;
     },
   },
 };

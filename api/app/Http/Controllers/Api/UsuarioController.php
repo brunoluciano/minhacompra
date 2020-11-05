@@ -30,8 +30,9 @@ class UsuarioController extends Controller
     public function store(Request $request, $empresa_id)
     {
         $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:usuarios,email'],
-            'password' => ['required', 'string', 'min:3'],
+            'password' => ['required', 'min:3'],
             'tipo_usuario_id' => ['required'],
         ]);
 
@@ -67,6 +68,7 @@ class UsuarioController extends Controller
     public function update(Request $request, $empresa_id, $id)
     {
         $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:3'],
             'tipo_usuario_id' => ['required'],

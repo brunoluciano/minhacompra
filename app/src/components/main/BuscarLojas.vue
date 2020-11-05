@@ -128,7 +128,6 @@ export default {
             this.lojasEncontradas = lojas != "" ? true : false;
 
             this.lojas = lojas;
-            console.log(this.lojas);
 
             // buscando respectiva imagem da empresa e atribuindo a um atributo
             this.lojas.forEach((loja) => {
