@@ -25,7 +25,8 @@ const IndexFuncionario = () =>
 export const routes = [{
         path: '*',
         component: Home,
-        name: 'home'
+        name: 'home',
+        meta: { auth: true }
     },
     {
         path: '/user',

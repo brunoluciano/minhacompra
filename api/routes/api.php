@@ -63,3 +63,17 @@ Route::get('tipousuario', 'Api\\TipoUsuarioController@index')->name('tipousuario
 Route::get('tipousuario/{id}', 'Api\\TipoUsuarioController@show')->name('tipousuario.show');
 Route::get('statusvenda', 'Api\\StatusVendaController@index')->name('statusvenda.index');
 Route::get('statusvenda/{id}', 'Api\\StatusVendaController@show')->name('statusvenda.show');
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::prefix('usuario')->group(function () {
+        Route::post('login', 'Api\\AuthControllerUsuario@login');
+        Route::post('register', 'Api\\AuthControllerUsuario@register');
+        Route::post('logout', 'Api\\AuthControllerUsuario@logout');
+        Route::post('refresh', 'Api\\AuthControllerUsuario@refresh');
+        Route::get('user-profile', 'Api\\AuthControllerUsuario@userProfile');
+    });
+});
