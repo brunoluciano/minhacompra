@@ -23,47 +23,60 @@ const IndexFuncionario = () =>
     import ('./components/app/funcionario/Index.vue');
 
 export const routes = [{
-        path: '*',
+        path: '/',
         component: Home,
         name: 'home',
-        meta: { auth: true }
+        meta: { auth: true },
+    },
+    {
+        path: '*',
+        component: Home,
+        name: 'error404',
+        meta: { auth: true },
     },
     {
         path: '/user',
         component: IndexCliente,
         name: 'user',
+        meta: { auth: true },
         children: [{
             path: 'buscarLojas',
             component: BuscarLojas,
             name: 'buscarlojas',
             props: true,
+            meta: { auth: true },
             children: [{
                 path: ':cep',
                 component: BuscarLojas,
                 name: 'buscarlojasbycep',
                 props: true,
+                meta: { auth: true },
             }]
         }, {
             path: 'perfil',
             component: PerfilCliente,
-            name: 'perfil'
+            name: 'perfil',
+            meta: { auth: true },
         }]
     },
     {
         path: '/loja',
         component: IndexLoja,
         name: 'loja',
+        meta: { auth: true },
         children: [{
                 path: ':id',
                 component: MainLoja,
                 name: 'lojaMain',
                 props: true,
+                meta: { auth: true },
             },
             {
                 path: ':loja/departamento/:departamento',
                 component: Departamento,
                 name: 'departamento',
                 props: true,
+                meta: { auth: true },
             },
         ]
     },
@@ -71,15 +84,18 @@ export const routes = [{
         path: '/app',
         component: IndexSistema,
         name: 'app',
+        meta: { auth: true },
         children: [{
                 path: 'dashboard',
                 component: DashboardGerente,
-                name: 'dashboardgerente'
+                name: 'dashboardgerente',
+                meta: { auth: true },
             },
             {
                 path: 'pedidos',
                 component: IndexFuncionario,
-                name: 'dashboardgerente'
+                name: 'dashboardfuncionario',
+                meta: { auth: true },
             }
         ]
     }

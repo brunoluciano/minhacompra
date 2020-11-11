@@ -146,16 +146,37 @@ export default {
 
     onSubmit() {
       // Auth
-      this.$auth.login({
-        params: { auth: this.login },
-        success: function () {
+
+      // console.log(this.$auth.login());
+
+      this.$http
+        .post("auth/usuario/login", this.login)
+        .then((res) => res.json())
+        .then((token) => {
+          localStorage.token = token.access_token;
+          localStorage.user = token.user;
+
+          // this.$http.post(`empresa/${idEmpresa}/usuario`, this.usuario).then(
+          //   (res) => {
+          //     res.json();
+          //     this.successNotify();
+          //     this.usuario = new Usuario();
+          //   },
+          //   (err) => {
+          //     console.log(err);
+          //     this.errorNotify();
+          //   }
+          // );
+
+          this.$router.push({
+            name: "dashboardgerente",
+          });
           this.successNotify();
-        },
-        error: function () {
+        }),
+        (err) => {
+          console.log(err);
           this.errorNotify();
-        },
-        // rememberMe: this.manterConectado,
-      });
+        };
     },
 
     successNotify() {

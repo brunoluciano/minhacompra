@@ -3,7 +3,7 @@
     <div class="row q-col-gutter-x-lg q-col-gutter-y-lg items-center">
       <div class="col-12 col-sm-4 col-md-4">
         <q-img
-          src="https://static-images.ifood.com.br/image/upload//logosgde/2959111d-2628-46c6-9fb5-a42a710ad29a/201912201539_o5xi_i.png"
+          :src="empresa.imgUrl"
           spinner-color="indigo"
           spinner-size="82px"
           transition="jump-up"
@@ -14,10 +14,11 @@
         <div
           class="text-h2 text-uppercase text-weight-bold text-grey-8 ellipsis"
         >
-          Supermercado
+          {{ empresa.nome }}
         </div>
         <div class="text-subtitle1">
-          Av. Brasil, 123 - Centro, São Paulo - SP
+          {{ empresa.endereco }}, {{ empresa.numero }} - {{ empresa.bairro }},
+          {{ empresa.cidade }} - {{ empresa.estado.sigla }}
         </div>
         <q-separator spaced color="white" />
         <q-btn
@@ -167,7 +168,43 @@ export default {
             "background: rgb(89,210,131);background: linear-gradient(0deg, rgba(89,210,131,1) 0%, rgba(120,233,159,1) 100%);",
         },
       },
+
+      user: {},
+      empresa: {},
     };
+  },
+
+  created() {
+    // this.user = localStorage.user;
+    console.log(this.user);
+
+    this.token = localStorage.token;
+
+    this.$http
+      .get("auth/usuario/user-profile", {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      })
+      .then((res) => res.json())
+      .then((user) => {
+        this.user = user;
+
+        this.$http
+          .get(`empresa/${this.user.empresa_id}`)
+          .then((res) => res.json())
+          .then((empresa) => {
+            this.empresa = empresa;
+            let url = `${this.$http.options.root}/empresa/${empresa.id}/images/logo`;
+            empresa.imgUrl = url;
+          }),
+          (err) => {
+            console.log(err);
+          };
+      }),
+      (err) => {
+        console.log(err);
+      };
   },
 
   components: {

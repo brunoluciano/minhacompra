@@ -9,7 +9,7 @@
 
         <q-card-section class="row q-pt-none">
           <div class="col">
-            <q-form @submit.prevent="onSubmit" @reset="onReset">
+            <q-form @submit.prevent="onSubmit">
               <div class="q-col-gutter-x-sm q-col-gutter-y-sm row items-start">
                 <q-input
                   rounded

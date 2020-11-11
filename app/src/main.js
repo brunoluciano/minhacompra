@@ -6,38 +6,54 @@ import { routes } from './routes'
 import './quasar'
 import VueSplide from '@splidejs/vue-splide'
 
-Vue.use(VueResource)
-Vue.use(VueRouter)
-Vue.use(VueSplide)
+// import auth            from '@websanova/vue-auth';
+// import authBearer      from '@websanova/vue-auth/dist/drivers/auth/bearer.esm.js';
+// import httpVueResource from '@websanova/vue-auth/dist/drivers/http/vue-resource.1.x.esm.js';
+// import routerVueRouter from '@websanova/vue-auth/dist/drivers/router/vue-router.2.x.esm.js';
 
-Vue.http.options.root = 'http://localhost:8000/api';
-const api_url = Vue.http.options.root;
-
-
-
-const router = new VueRouter({
-    routes,
-    mode: 'history'
-})
-
-Vue.config.productionTip = false
-
-// Auth
 Vue.use(require('@websanova/vue-auth'), {
     auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
     http: require('@websanova/vue-auth/drivers/http/vue-resource.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
     rolesVar: 'type',
-    loginData: { url: `${api_url}/auth/usuario/login`, method: 'POST', fetchUser: true },
-    fetchData: { url: `${api_url}/auth/usuario/user-profile`, method: 'GET' },
-    refreshData: { url: `${api_url}/auth/usuario/refresh`, method: 'POST', atInit: false }
-})
+    loginData: { url: 'http://localhost:8000/api/auth/usuario/login', method: 'POST', fetchUser: true },
+    fetchData: { url: 'http://localhost:8000/api/auth/usuario/user-profile', method: 'GET' },
+    refreshData: { url: 'http://localhost:8000/api/auth/usuario/refresh', method: 'POST', atInit: false }
+  });
+
+Vue.use(VueResource)
+Vue.use(VueRouter)
+Vue.use(VueSplide)
+
+
+
+Vue.router = new VueRouter({
+    routes,
+    mode: 'history'
+});
+const router = Vue.router;
+Vue.http.options.root = 'http://localhost:8000/api';
+
+Vue.config.productionTip = false
+
+
+
+// const api_url = Vue.http.options.root;
+
+
+// Auth
 
 new Vue({
     router,
+    // routes,
     render: h => h(App),
-
+    
     data: {
         qtdItensCarrinho: 0,
     }
 }).$mount('#app')
+
+
+    // loginData: { url: 'http://localhost:8000/api/auth/usuario/login', method: 'POST', fetchUser: true },
+    // fetchData: { url: 'http://localhost:8000/api/auth/usuario/user-profile', method: 'GET' },
+    // refreshData: { url: 'http://localhost:8000/api/auth/usuario/refresh', method: 'POST', atInit: false }
