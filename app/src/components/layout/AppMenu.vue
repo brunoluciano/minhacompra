@@ -27,7 +27,7 @@
               <q-icon left name="person" />
               <div class="text-center q-pa-none">
                 Olá
-                <span class="text-weight-bold">Usuário</span>
+                <span class="text-weight-bold">{{ user.nome }}</span>
               </div>
             </template>
             <q-list class="text-grey-8">
@@ -64,12 +64,36 @@ export default {
         login: false,
         cadastro: false,
       },
+
+      user: {},
     };
+  },
+
+  created() {
+    this.user = this.$store.state.usuario.data;
   },
 
   methods: {
     sair() {
       this.$router.push({ name: "home" });
+      // this.$store.commit("logout");
+      // this.$http
+      //   .post("auth/usuario/logout", {
+      //     headers: {
+      //       Authorization: `Bearer ${localStorage.token}`,
+      //     },
+      //   })
+      //   .then(
+      //     (res) => {
+      //       res.json();
+      //       this.$router.push({ name: "home" });
+      //       this.$store.state.usuario = "";
+      //     },
+      //     (err) => {
+      //       console.log(err);
+      //     }
+      //   );
+      // this.user = "";
     },
   },
 };

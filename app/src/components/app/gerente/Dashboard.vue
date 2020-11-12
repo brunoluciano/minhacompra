@@ -174,37 +174,38 @@ export default {
     };
   },
 
-  created() {
-    // this.user = localStorage.user;
-    console.log(this.user);
+  mounted() {
+    // this.token = localStorage.getItem("token");
+    // this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = this.$store.state.usuario.data;
+    this.empresa = this.$store.state.usuario.empresa;
+    console.log(this.empresa);
 
-    this.token = localStorage.token;
+    // this.$http
+    //   .get("auth/usuario/user-profile", {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.token}`,
+    //     },
+    //   })
+    //   .then((res) => res.json())
+    //   .then((user) => {
+    //     this.user = user;
 
-    this.$http
-      .get("auth/usuario/user-profile", {
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      })
-      .then((res) => res.json())
-      .then((user) => {
-        this.user = user;
-
-        this.$http
-          .get(`empresa/${this.user.empresa_id}`)
-          .then((res) => res.json())
-          .then((empresa) => {
-            this.empresa = empresa;
-            let url = `${this.$http.options.root}/empresa/${empresa.id}/images/logo`;
-            empresa.imgUrl = url;
-          }),
-          (err) => {
-            console.log(err);
-          };
-      }),
-      (err) => {
-        console.log(err);
-      };
+    // this.$http
+    //   .get(`empresa/${this.user.empresa_id}`)
+    //   .then((res) => res.json())
+    //   .then((empresa) => {
+    //     this.empresa = empresa;
+    //     let url = `${this.$http.options.root}/empresa/${empresa.id}/images/logo`;
+    //     empresa.imgUrl = url;
+    //   }),
+    //   (err) => {
+    //     console.log(err);
+    //   };
+    //   }),
+    //   (err) => {
+    //     console.log(err);
+    //   };
   },
 
   components: {

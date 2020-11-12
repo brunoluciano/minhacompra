@@ -153,8 +153,10 @@ export default {
         .post("auth/usuario/login", this.login)
         .then((res) => res.json())
         .then((token) => {
-          localStorage.token = token.access_token;
-          localStorage.user = token.user;
+          localStorage.setItem("token", token.access_token);
+          localStorage.setItem("user", JSON.stringify(token.user));
+          this.$store.commit("setUsuario", token.user);
+          this.$store.commit("setUsuarioEmpresa", token.user.empresa_id);
 
           // this.$http.post(`empresa/${idEmpresa}/usuario`, this.usuario).then(
           //   (res) => {
