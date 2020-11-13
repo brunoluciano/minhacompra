@@ -155,23 +155,16 @@ export default {
         .then((token) => {
           localStorage.setItem("token", token.access_token);
           localStorage.setItem("user", JSON.stringify(token.user));
-          this.$store.commit("setUsuario", token.user);
-          this.$store.commit("setUsuarioEmpresa", token.user.empresa_id);
 
-          // this.$http.post(`empresa/${idEmpresa}/usuario`, this.usuario).then(
-          //   (res) => {
-          //     res.json();
-          //     this.successNotify();
-          //     this.usuario = new Usuario();
-          //   },
-          //   (err) => {
-          //     console.log(err);
-          //     this.errorNotify();
-          //   }
-          // );
+          let user = token.user;
+          let rota = [
+            "dashboardgerente",
+            "dashboardfuncionario",
+            "dashboardentregador",
+          ];
 
           this.$router.push({
-            name: "dashboardgerente",
+            name: rota[user.tipo_usuario_id - 1],
           });
           this.successNotify();
         }),

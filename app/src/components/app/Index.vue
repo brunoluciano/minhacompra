@@ -13,6 +13,10 @@ export default {
   components: {
     AppMenu,
   },
+
+  created() {
+    this.$store.commit("login");
+  },
 };
 </script>
 

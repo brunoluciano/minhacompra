@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="card text-white shadow-5" :style="cor">
+    <q-card class="card text-white shadow-5" :style="cor" @click="redirectTo">
       <q-card-section horizontal v-ripple.early>
         <q-card-section class="q-pr-none q-ml-sm ellipsis-3-lines">
           <div class="text-h5 text-weight-bold">{{ descricao }}</div>
@@ -16,7 +16,14 @@
 
 <script>
 export default {
-  props: ["descricao", "icone", "cor"],
+  props: ["descricao", "icone", "cor", "link"],
+
+  methods: {
+    redirectTo() {
+      // alert(this.link);
+      this.$router.push({ name: this.link });
+    },
+  },
 };
 </script>
 

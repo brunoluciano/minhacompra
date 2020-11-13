@@ -44,6 +44,7 @@
           :descricao="card.descricao"
           :icone="card.icone"
           :cor="card.cor"
+          :link="card.link"
         ></card>
       </div>
     </div>
@@ -59,6 +60,7 @@
           :descricao="card.descricao"
           :icone="card.icone"
           :cor="card.cor"
+          :link="card.link"
         ></card>
       </div>
     </div>
@@ -70,6 +72,7 @@
           :descricao="card.estoque.descricao"
           :icone="card.estoque.icone"
           :cor="card.estoque.cor"
+          :link="card.estoque.link"
         ></card>
       </div>
       <div class="col-12 col-sm-6 col-md-3">
@@ -80,6 +83,7 @@
           :descricao="card.relatorios.descricao"
           :icone="card.relatorios.icone"
           :cor="card.relatorios.cor"
+          :link="card.relatorios.link"
         ></card>
       </div>
       <div class="col-12 col-sm-6 col-md-3">
@@ -90,6 +94,7 @@
           :descricao="card.configuracoes.descricao"
           :icone="card.configuracoes.icone"
           :cor="card.configuracoes.cor"
+          :link="card.configuracoes.link"
         ></card>
       </div>
     </div>
@@ -135,12 +140,14 @@ export default {
             icone: "mdi-package-variant-closed",
             cor:
               "background: rgb(245,133,83);background: linear-gradient(0deg, rgba(245,133,83,1) 0%, rgba(241,168,135,1) 100%);",
+            link: "produtosempresa",
           },
           {
             descricao: "Funcionários",
             icone: "mdi-account-group",
             cor:
               "background: rgb(245,83,83);background: linear-gradient(0deg, rgba(245,83,83,1) 0%, rgba(241,135,135,1) 100%);",
+            link: "funcionariosempresa",
           },
           {
             descricao: "Definir Promoções",
@@ -179,7 +186,6 @@ export default {
     // this.user = JSON.parse(localStorage.getItem("user"));
     this.user = this.$store.state.usuario.data;
     this.empresa = this.$store.state.usuario.empresa;
-    console.log(this.empresa);
 
     // this.$http
     //   .get("auth/usuario/user-profile", {

@@ -19,6 +19,13 @@ const IndexSistema = () =>
     import ('./components/app/Index.vue');
 const DashboardGerente = () =>
     import ('./components/app/gerente/Dashboard.vue');
+// OPERAÇÕES
+const ProdutosEmpresa = () =>
+    import ('./components/app/gerente/operacoes/Produtos.vue');
+const FuncionariosEmpresa = () =>
+    import ('./components/app/gerente/operacoes/Funcionarios.vue');
+
+
 const IndexFuncionario = () =>
     import ('./components/app/funcionario/Index.vue');
 
@@ -26,57 +33,48 @@ export const routes = [{
         path: '/',
         component: Home,
         name: 'home',
-        meta: { auth: true },
     },
     {
         path: '*',
         component: Home,
         name: 'error404',
-        meta: { auth: true },
     },
     {
         path: '/user',
         component: IndexCliente,
         name: 'user',
-        meta: { auth: true },
         children: [{
             path: 'buscarLojas',
             component: BuscarLojas,
             name: 'buscarlojas',
             props: true,
-            meta: { auth: true },
             children: [{
                 path: ':cep',
                 component: BuscarLojas,
                 name: 'buscarlojasbycep',
                 props: true,
-                meta: { auth: true },
             }]
         }, {
             path: 'perfil',
             component: PerfilCliente,
             name: 'perfil',
-            meta: { auth: true },
         }]
     },
     {
         path: '/loja',
         component: IndexLoja,
         name: 'loja',
-        meta: { auth: true },
         children: [{
                 path: ':id',
                 component: MainLoja,
                 name: 'lojaMain',
                 props: true,
-                meta: { auth: true },
             },
             {
                 path: ':loja/departamento/:departamento',
                 component: Departamento,
                 name: 'departamento',
                 props: true,
-                meta: { auth: true },
             },
         ]
     },
@@ -84,18 +82,25 @@ export const routes = [{
         path: '/app',
         component: IndexSistema,
         name: 'app',
-        meta: { auth: true },
         children: [{
                 path: 'dashboard',
                 component: DashboardGerente,
                 name: 'dashboardgerente',
-                meta: { auth: true },
+            },
+            {
+                path: 'operacoes/produtos',
+                component: ProdutosEmpresa,
+                name: 'produtosempresa',
+            },
+            {
+                path: 'operacoes/funcionarios',
+                component: FuncionariosEmpresa,
+                name: 'funcionariosempresa',
             },
             {
                 path: 'pedidos',
                 component: IndexFuncionario,
                 name: 'dashboardfuncionario',
-                meta: { auth: true },
             }
         ]
     }
