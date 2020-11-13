@@ -40,19 +40,31 @@ export default new Vuex.Store({
         login(state) {
             let user = localStorage.getItem("user");
             let token = localStorage.getItem("token");
-            state.usuario.data = JSON.parse(user);
+            user = JSON.parse(user)
+            state.usuario.data = user;
             state.usuario.token = token;
             resource.$http
-                .get(`empresa/${state.usuario.data.empresa_id}`)
+                .get(`empresa/${user.empresa_id}`)
                 .then((res) => res.json())
                 .then((empresa) => {
                     state.usuario.empresa = empresa;
-                    let url = `${resource.$http.options.root}/empresa/${state.usuario.data.empresa_id}/images/logo`;
+                    let url = `${resource.$http.options.root}/empresa/${empresa.id}/images/logo`;
                     state.usuario.empresa.imgUrl = url;
                 }),
                 (err) => {
                     console.log(err);
                 };
+
+        },
+
+        logout(state) {
+            state.usuario.data = "";
+            state.usuario.empresa = "";
+            state.usuario.token = "";
+
+            localStorage.clear();
+            localStorage.removeItem('vuex');
+            resource.$router.push({ name: "home" });
         }
 
         // logout (state) {

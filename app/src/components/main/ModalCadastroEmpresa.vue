@@ -204,6 +204,7 @@
             </q-form>
           </div>
         </q-card-section>
+        {{ empresa }}
       </q-card>
     </q-dialog>
   </div>

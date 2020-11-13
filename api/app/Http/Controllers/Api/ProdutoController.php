@@ -20,7 +20,8 @@ class ProdutoController extends Controller
     public function index($empresa_id)
     {
         $produtos = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida', 'promocao'])
-            ->where('empresa_id', $empresa_id)->get();
+            ->where('empresa_id', $empresa_id)
+            ->orderby('descricao')->get();
         return $produtos;
     }
 

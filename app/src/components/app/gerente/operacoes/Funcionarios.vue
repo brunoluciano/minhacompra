@@ -11,6 +11,7 @@
     <br /><br />
     <div class="col">
       <q-table
+        class="my-sticky-header-table"
         title="Funcionários"
         :data="funcionarios"
         :columns="columns"
@@ -110,14 +111,27 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+<style lang="sass">
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap")
 
-.text-table-title {
-  font-family: "Oswald", sans-serif !important;
-}
+.text-table-title
+  font-family: "Oswald", sans-serif !important
 
-.text-header-bold {
-  font-weight: bold !important;
-}
+.text-header-bold
+  font-weight: bold !important
+
+.my-sticky-header-table
+  /* height or max-height is important */
+  max-height: 70vh
+
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
 </style>

@@ -75,8 +75,7 @@ export default {
 
   methods: {
     sair() {
-      this.$router.push({ name: "home" });
-      // this.$store.commit("logout");
+      this.$store.commit("logout");
       // this.$http
       //   .post("auth/usuario/logout", {
       //     headers: {
