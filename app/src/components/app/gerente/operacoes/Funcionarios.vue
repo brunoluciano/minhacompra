@@ -121,10 +121,6 @@ export default {
   },
 
   methods: {
-    voltarDashboard() {
-      this.$router.push({ name: "dashboardgerente" });
-    },
-
     abrirModalCadastro() {
       this.modal.cadastro = true;
     },

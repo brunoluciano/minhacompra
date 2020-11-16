@@ -34,17 +34,30 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="operacoes" :props="props">
-              <q-btn
+              <q-btn-group
                 v-if="props.row.possui_promocao"
+                spread
                 outline
                 rounded
                 dense
-                color="orange"
-                icon="edit"
-                label="Editar Promoção"
-                padding="xs md"
-                @click="props.expand = !props.expand"
-              />
+              >
+                <q-btn
+                  outline
+                  color="orange"
+                  icon="edit"
+                  label="Editar"
+                  padding="xs md"
+                  @click="props.expand = !props.expand"
+                />
+                <q-btn
+                  outline
+                  color="red"
+                  icon="delete"
+                  label="Remover"
+                  padding="xs md"
+                  @click="removerPromocao(props.row, props)"
+                />
+              </q-btn-group>
               <q-btn
                 v-else
                 outline
@@ -52,9 +65,10 @@
                 dense
                 color="teal"
                 icon="add"
-                label="Nova Promoção"
+                label="Adicionar"
                 padding="xs sm"
                 @click="props.expand = !props.expand"
+                class="full-width"
               />
             </q-td>
 
@@ -151,7 +165,7 @@
                 color="teal"
                 icon="check"
                 label="Aplicar Promoção"
-                @click="aplicarPromocao(props.row)"
+                @click="aplicarPromocao(props.row, props)"
                 class="full-width"
               />
             </q-td>
@@ -230,47 +244,38 @@ export default {
   },
 
   created() {
-    let empresa_id = this.$store.state.usuario.empresa.id;
-    this.$http
-      .get(`empresa/${empresa_id}/produto`)
-      .then((res) => res.json())
-      .then(
-        (produtos) => {
-          this.produtos = produtos;
-          this.produtos.forEach((produto) => {
-            produto.imgUrl = `${this.$http.options.root}/empresa/${produto.empresa.id}/images/produto/${produto.id}`;
-            if (produto.promocao == null) {
-              let promocao = {
-                novo_preco: 0,
-                porcentagem: 0,
-              };
-              produto.promocao = promocao;
-              produto.possui_promocao = false;
-            } else {
-              produto.possui_promocao = true;
-            }
-          });
-          this.loading = false;
-        },
-        (err) => console.log(err)
-      );
+    window.setTimeout(() => {
+      let empresa_id = this.$store.state.usuario.empresa.id;
+      this.$http
+        .get(`empresa/${empresa_id}/produto`)
+        .then((res) => res.json())
+        .then(
+          (produtos) => {
+            this.produtos = produtos;
+            this.produtos.forEach((produto) => {
+              produto.imgUrl = `${this.$http.options.root}/empresa/${produto.empresa.id}/images/produto/${produto.id}`;
+              if (produto.promocao == null) {
+                let promocao = {
+                  novo_preco: 0,
+                  porcentagem: 0,
+                };
+                produto.promocao = promocao;
+                produto.possui_promocao = false;
+              } else {
+                produto.possui_promocao = true;
+              }
+            });
+            this.loading = false;
+          },
+          (err) => console.log(err)
+        );
+    }, 1000);
   },
 
   methods: {
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-
-    voltarDashboard() {
-      this.$router.push({ name: "dashboardgerente" });
-    },
-
-    abrirModalCadastro() {
-      this.modal.cadastro = true;
-    },
-    fecharModalCadastro(val) {
-      this.modal.cadastro = val.target;
     },
 
     ativaDesativaPromocao(val, prod) {
@@ -318,28 +323,116 @@ export default {
       ).toFixed(2);
     },
 
-    aplicarPromocao(prod) {
+    aplicarPromocao(prod, props) {
       let empresa_id = this.$store.state.usuario.empresa.id;
       var produto = this.produtos.filter((val) => val.id == prod.id);
       produto = produto[0];
-      let update = {
+      let form = {
         // _method: "PATCH",
         novo_preco: produto.promocao.novo_preco,
         porcentagem: produto.promocao.porcentagem,
       };
+
+      if (prod.promocao_ativa) {
+        this.$http
+          .put(
+            `empresa/${empresa_id}/produto/${prod.id}/promocao/${prod.promocao.id}`,
+            form
+          )
+          .then(
+            (res) => {
+              res.json();
+              this.successNotify(
+                `Sucesso ao atualizar promoção do produto ${prod.descricao}!`
+              );
+              props.expand = false;
+            },
+            (err) => {
+              console.log(err);
+              this.errorNotify(
+                `Erro ao atualizar promoção do produto ${prod.descricao}!`
+              );
+            }
+          );
+      } else {
+        this.$http
+          .post(`empresa/${empresa_id}/produto/${prod.id}/promocao`, form)
+          .then((res) => res.json())
+          .then(
+            (promocao) => {
+              this.successNotify(
+                `Sucesso ao aplicar nova promoção ao produto ${prod.descricao}!`
+              );
+
+              // ATUALIZAR STATUS DA PROMOÇÃO COMO ATIVA
+              let update = {
+                _method: "PATCH",
+                promocao_ativa: 1,
+              };
+              this.$http
+                .post(`empresa/${empresa_id}/produto/${prod.id}/update`, update)
+                .then(
+                  (res) => {
+                    res.json();
+                    prod.promocao_ativa = true;
+                  },
+                  (err) => console.log(err)
+                );
+
+              prod.promocao.id = promocao.id;
+              props.expand = false;
+              prod.possui_promocao = true;
+            },
+            (err) => {
+              console.log(err);
+              this.errorNotify(
+                `Erro ao aplicar nova promoção ao produto ${prod.descricao}!`
+              );
+            }
+          );
+      }
+    },
+
+    removerPromocao(prod, props) {
+      let empresa_id = this.$store.state.usuario.empresa.id;
       this.$http
-        .put(`empresa/${empresa_id}/produto/${prod.id}/promocao/1`, update)
+        .delete(
+          `empresa/${empresa_id}/produto/${prod.id}/promocao/${prod.promocao.id}`
+        )
         .then(
           (res) => {
             res.json();
             this.successNotify(
-              `Sucesso ao aplicar promoção do produto ${prod.descricao}!`
+              `Sucesso ao remover promoção do produto ${prod.descricao}!`
             );
+
+            // ATUALIZAR STATUS DA PROMOÇÃO COMO DESATIVADO
+            let update = {
+              _method: "PATCH",
+              promocao_ativa: 0,
+            };
+            this.$http
+              .post(`empresa/${empresa_id}/produto/${prod.id}/update`, update)
+              .then(
+                (res) => {
+                  res.json();
+                  prod.promocao_ativa = false;
+                },
+                (err) => console.log(err)
+              );
+
+            props.expand = false;
+            prod.possui_promocao = false;
+            let promocao = {
+              novo_preco: 0,
+              porcentagem: 0,
+            };
+            prod.promocao = promocao;
           },
           (err) => {
             console.log(err);
             this.errorNotify(
-              `Erro ao aplicar promoção do produto ${prod.descricao}!`
+              `Erro ao remover promoção do produto ${prod.descricao}!`
             );
           }
         );
@@ -365,20 +458,33 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
-.text-table-title {
-  font-family: "Oswald", sans-serif !important;
-}
+<style lang="sass">
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap")
 
-.text-header-bold {
-  font-weight: bold !important;
-}
+.text-table-title
+  font-family: "Oswald", sans-serif !important
 
-.image-card {
-  display: block;
-  -moz-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
-}
+.text-header-bold
+  font-weight: bold !important
+
+.image-card
+  display: block
+  -moz-transition: all 0.5s
+  -webkit-transition: all 0.5s
+  transition: all 0.5s
+
+.my-sticky-header-table
+  /* height or max-height is important */
+  max-height: 70vh
+
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
 </style>

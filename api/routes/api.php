@@ -51,6 +51,7 @@ Route::prefix('empresa/{empresa}')->group(function () {
     Route::prefix('images')->group(function () {
         Route::get('logo', 'Api\\EmpresaController@getLogoImage');
         Route::resource('banner', 'Api\\BannerController');
+        Route::patch('banner/{id}/update', 'Api\\BannerController@updatePatch');
         Route::get('banner/{id}/img', 'Api\\BannerController@getBannerImage');
         Route::get('produto/{id}', 'Api\\ProdutoController@getProdutoImage');
     });

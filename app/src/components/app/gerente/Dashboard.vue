@@ -162,6 +162,7 @@ export default {
           icone: "mdi-database",
           cor:
             "background: rgb(172,172,172);background: linear-gradient(0deg, rgba(172,172,172,1) 0%, rgba(226,226,226,1) 100%);",
+          link: "estoque",
         },
         relatorios: {
           descricao: "Gerar Relatórios",
@@ -174,6 +175,7 @@ export default {
           icone: "mdi-view-carousel",
           cor:
             "background: rgb(89,210,131);background: linear-gradient(0deg, rgba(89,210,131,1) 0%, rgba(120,233,159,1) 100%);",
+          link: "banners",
         },
       },
 
@@ -183,9 +185,21 @@ export default {
   },
 
   created() {
-    window.setTimeout(() => {
-      this.empresa = this.$store.state.usuario.empresa;
-    }, 500);
+    // window.setTimeout(() => {
+    //   this.empresa = this.$store.state.usuario.empresa;
+    // }, 500);
+    this.user = this.$store.state.usuario.data;
+    this.$http
+      .get(`empresa/${this.user.empresa_id}`)
+      .then((res) => res.json())
+      .then((empresa) => {
+        this.empresa = empresa;
+        let url = `${this.$http.options.root}/empresa/${this.user.empresa_id}/images/logo`;
+        this.empresa.imgUrl = url;
+      }),
+      (err) => {
+        console.log(err);
+      };
   },
 
   components: {

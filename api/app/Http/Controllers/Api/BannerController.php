@@ -86,6 +86,22 @@ class BannerController extends Controller
         return $banner;
     }
 
+    public function updatePatch(Request $request, $empresa_id, $id)
+    {
+        $empresa = Empresa::findOrFail($empresa_id);
+        $banner = Banner::with('empresa')->where('empresa_id', $empresa_id)->findOrFail($id);
+
+        $requestData = $request->all();
+        $requestData['empresa_id'] = $empresa_id;
+        if (!$request->file() == null) {
+            Storage::delete($banner->imagem_url);
+            $requestData['imagem_url'] = $request->file('imgBanner')->store('empresa/' . $empresa->cnpj . '/banners');
+        }
+        $banner->update($requestData);
+
+        return $banner;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

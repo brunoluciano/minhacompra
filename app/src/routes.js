@@ -26,6 +26,12 @@ const FuncionariosEmpresa = () =>
     import ('./components/app/gerente/operacoes/Funcionarios.vue');
 const Promocoes = () =>
     import ('./components/app/gerente/operacoes/Promocoes.vue');
+// ESTOQUE
+const Estoque = () =>
+import ('./components/app/gerente/estoque/Estoque.vue');
+// ESTOQUE
+const Banners = () =>
+import ('./components/app/gerente/configuracoes/Banners.vue');
 
 
 const IndexFuncionario = () =>
@@ -103,6 +109,16 @@ export const routes = [{
                 path: 'operacoes/promocoes',
                 component: Promocoes,
                 name: 'promocoes',
+            },
+            {
+                path: 'estoque',
+                component: Estoque,
+                name: 'estoque',
+            },
+            {
+                path: 'banners',
+                component: Banners,
+                name: 'banners',
             },
 
             {
