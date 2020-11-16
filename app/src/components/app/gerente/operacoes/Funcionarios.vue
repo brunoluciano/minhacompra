@@ -1,14 +1,14 @@
 <template>
   <div class="q-pa-lg">
-    <q-btn
+    <!-- <q-btn
       flat
       rounded
       color="grey"
       icon="mdi-undo-variant"
       label="Voltar para Dashboard"
       @click="voltarDashboard"
-    />
-    <br /><br />
+    /> -->
+    <!-- <br /><br /> -->
     <div class="col">
       <q-table
         class="my-sticky-header-table"
@@ -30,7 +30,7 @@
             :disable="loading"
             label="Adicionar Funcionário"
             icon="add"
-            @click="addRow"
+            @click="abrirModalCadastro"
             class="q-mr-sm"
           />
           <q-input
@@ -53,11 +53,23 @@
         </template>
       </q-table>
     </div>
+
+    <!-- MODAL CADASTRO PRODUTO -->
+    <cadastrar-funcionario
+      :mostraModal="modal.cadastro"
+      @fecharModal="fecharModalCadastro"
+    />
   </div>
 </template>
 
 <script>
+import CadastrarFuncionario from "./modal/CadastrarFuncionario.vue";
+
 export default {
+  components: {
+    CadastrarFuncionario,
+  },
+
   data() {
     return {
       produtos: [],
@@ -86,26 +98,38 @@ export default {
       ],
       loading: true,
       filter: "",
+      modal: {
+        cadastro: false,
+      },
     };
   },
 
   created() {
-    let empresa_id = this.$store.state.usuario.empresa.id;
-    this.$http
-      .get(`empresa/${empresa_id}/usuario`)
-      .then((res) => res.json())
-      .then(
-        (funcionarios) => {
-          this.funcionarios = funcionarios;
-          this.loading = false;
-        },
-        (err) => console.log(err)
-      );
+    window.setTimeout(() => {
+      let empresa_id = this.$store.state.usuario.empresa.id;
+      this.$http
+        .get(`empresa/${empresa_id}/usuario`)
+        .then((res) => res.json())
+        .then(
+          (funcionarios) => {
+            this.funcionarios = funcionarios;
+            this.loading = false;
+          },
+          (err) => console.log(err)
+        );
+    }, 1000);
   },
 
   methods: {
     voltarDashboard() {
       this.$router.push({ name: "dashboardgerente" });
+    },
+
+    abrirModalCadastro() {
+      this.modal.cadastro = true;
+    },
+    fecharModalCadastro(val) {
+      this.modal.cadastro = val.target;
     },
   },
 };

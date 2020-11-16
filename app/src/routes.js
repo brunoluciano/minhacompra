@@ -24,6 +24,8 @@ const ProdutosEmpresa = () =>
     import ('./components/app/gerente/operacoes/Produtos.vue');
 const FuncionariosEmpresa = () =>
     import ('./components/app/gerente/operacoes/Funcionarios.vue');
+const Promocoes = () =>
+    import ('./components/app/gerente/operacoes/Promocoes.vue');
 
 
 const IndexFuncionario = () =>
@@ -97,6 +99,12 @@ export const routes = [{
                 component: FuncionariosEmpresa,
                 name: 'funcionariosempresa',
             },
+            {
+                path: 'operacoes/promocoes',
+                component: Promocoes,
+                name: 'promocoes',
+            },
+
             {
                 path: 'pedidos',
                 component: IndexFuncionario,

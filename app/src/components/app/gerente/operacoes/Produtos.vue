@@ -2,15 +2,15 @@
   <div class="q-pa-lg">
     <!-- <div class="text-h3 text-grey-9">Produtos</div> -->
     <!-- <q-separator class="q-mb-md" /> -->
-    <q-btn
+    <!-- <q-btn
       flat
       rounded
       color="grey"
       icon="mdi-undo-variant"
       label="Voltar para Dashboard"
       @click="voltarDashboard"
-    />
-    <br /><br />
+    /> -->
+    <!-- <br /><br /> -->
     <div class="col">
       <q-table
         class="my-sticky-header-table"

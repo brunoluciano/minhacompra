@@ -268,7 +268,7 @@ export default {
         (res) => {
           res.json();
           this.successNotify();
-          // this.produto = new Produto();
+          this.produto = new Produto();
         },
         (err) => {
           console.log(err);

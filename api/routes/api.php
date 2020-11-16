@@ -36,6 +36,7 @@ Route::prefix('empresa/{empresa}')->group(function () {
     Route::resource('categoria', 'Api\\CategoriaController');
     Route::resource('marca', 'Api\\MarcaController');
     Route::resource('produto', 'Api\\ProdutoController');
+    Route::patch('produto/{id}/update', 'Api\\ProdutoController@updatePatch');
 
     Route::prefix('produtos')->group(function () {
         Route::get('comPromocao', 'Api\\ProdutoController@comPromocao')->name('produto.compromocao');

@@ -154,6 +154,7 @@ export default {
             icone: "mdi-check-decagram",
             cor:
               "background: rgb(142,83,245);background: linear-gradient(0deg, rgba(142,83,245,1) 0%, rgba(174,135,241,1) 100%);",
+            link: "promocoes",
           },
         ],
         estoque: {

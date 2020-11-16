@@ -76,7 +76,7 @@ class ProdutoController extends Controller
      */
     public function show($empresa_id, $id)
     {
-        $produto = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida'])
+        $produto = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida', 'promocao'])
             ->where('empresa_id', $empresa_id)->findOrFail($id);
         return $produto;
     }
@@ -103,6 +103,22 @@ class ProdutoController extends Controller
             'estoque_maximo' => 'required|min:1',
             'preco' => 'required|min:1',
         ]);
+        $produto = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida'])
+            ->where('empresa_id', $empresa_id)->findOrFail($id);
+
+        $requestData = $request->all();
+        $requestData['empresa_id'] = $empresa_id;
+        if (!$request->file() == null) {
+            Storage::deleteDirectory('empresa/' . $produto->empresa->cnpj . '/produtos/' . $produto->descricao);
+            $requestData['imagem_url'] = $request->file('imgProduto')->store('empresa/' . $produto->empresa->cnpj . '/produtos/' . $request->input('descricao'));
+        }
+        $produto->update($requestData);
+
+        return $produto;
+    }
+
+    public function updatePatch(Request $request, $empresa_id, $id)
+    {
         $produto = Produto::with(['empresa', 'departamento', 'categoria', 'marca', 'unidade_medida'])
             ->where('empresa_id', $empresa_id)->findOrFail($id);
 
