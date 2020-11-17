@@ -83,7 +83,7 @@ export default {
       .then((res) => res.json())
       .then(
         (banners) => {
-          this.banners = banners;
+          this.banners = banners.filter((val) => val.ativo == true);
           this.banners.forEach((banner) => {
             banner.imgUrl = `${this.$http.options.root}/empresa/${this.id}/images/banner/${banner.id}/img`;
           });

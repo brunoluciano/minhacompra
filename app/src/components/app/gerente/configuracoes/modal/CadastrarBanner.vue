@@ -97,18 +97,20 @@ export default {
 
   methods: {
     onSubmit() {
-      this.form.append("imgBanner", this.produto.imgProduto);
-      this.form.append("descricao", this.produto.descricao);
+      let empresa_id = this.$store.state.usuario.empresa.id;
+      this.form.append("imgBanner", this.banner.imgBanner);
+      this.form.append("descricao", this.banner.descricao);
       this.form.append("ativo", 1);
       this.$http
-        .post(`empresa/${this.empresa_id}/images/banner`, this.form)
+        .post(`empresa/${empresa_id}/images/banner`, this.form)
+        .then((res) => res.json())
         .then(
-          (res) => {
-            res.json();
-            this.successNotify();
+          (banner) => {
             this.banner.imgBanner = "";
             this.banner.descricao = "";
-            // this.produto = new Produto();
+            let bannerAdicionado = banner;
+            this.$emit("bannerAdicionado", bannerAdicionado);
+            this.successNotify();
           },
           (err) => {
             console.log(err);

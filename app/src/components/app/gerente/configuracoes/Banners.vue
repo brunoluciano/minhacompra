@@ -42,11 +42,25 @@
 
         <template v-slot:body="props">
           <q-tr :props="props">
+            <q-td key="operacoes" :props="props">
+              <q-btn
+                outline
+                rounded
+                dense
+                color="red"
+                icon="delete"
+                label="Remover"
+                padding="xs sm"
+                class="full-width"
+                @click="removerBanner(props.row)"
+              />
+            </q-td>
             <q-td key="imagem" :props="props">
               <q-img
                 :src="props.row.img"
                 spinner-color="teal"
                 style="height: 300px; width: 100%"
+                :ratio="1"
               />
             </q-td>
 
@@ -111,6 +125,7 @@
     <cadastrar-banner
       :mostraModal="modal.cadastro"
       @fecharModal="fecharModalCadastro"
+      @bannerAdicionado="bannerAdicionadoCadastro"
     />
   </div>
 </template>
@@ -127,6 +142,12 @@ export default {
     return {
       banners: [],
       columns: [
+        {
+          name: "operacoes",
+          label: "Operações",
+          required: true,
+          align: "center",
+        },
         {
           name: "imagem",
           label: "Imagem",
@@ -218,6 +239,35 @@ export default {
         );
     },
 
+    bannerAdicionadoCadastro(val) {
+      let empresa_id = this.$store.state.usuario.empresa.id;
+      val.img = `${this.$http.options.root}/empresa/${empresa_id}/images/banner/${val.id}/img`;
+      this.banners.push(val);
+    },
+
+    removerBanner(banner) {
+      let empresa_id = this.$store.state.usuario.empresa.id;
+      this.$http
+        .delete(`empresa/${empresa_id}/images/banner/${banner.id}`)
+        .then(
+          (res) => {
+            res.json();
+            let indice = this.banners.findIndex((x) => x.id == banner.id);
+            this.banners = [
+              ...this.banners.slice(0, indice),
+              ...this.banners.slice(indice + 1),
+            ];
+            this.successNotify(
+              `Sucesso ao remover banner ${banner.descricao}!`
+            );
+          },
+          (err) => {
+            console.log(err);
+            this.errorNotify(`Erro ao remover banner ${banner.descricao}!`);
+          }
+        );
+    },
+
     successNotify(msg) {
       this.$q.notify({
         progress: true,
@@ -257,7 +307,7 @@ export default {
 }
 
 .my-sticky-header-table {
-  max-height: 70vh;
+  max-height: 75vh;
 }
 
 .my-sticky-header-table thead tr th {
