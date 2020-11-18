@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Cliente extends Model
+// JWT contract
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+class Cliente extends Authenticatable implements JWTSubject
 {
     protected $fillable = [
         'email', 'password', 'pessoa_id'
@@ -22,4 +27,24 @@ class Cliente extends Model
     {
         return $this->belongsTo('App\Models\Pessoa');
     }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+     public function getJWTIdentifier()
+     {
+         return $this->getKey();
+     }
+ 
+     /**
+      * Return a key value array, containing any custom claims to be added to the JWT.
+      *
+      * @return array
+      */
+     public function getJWTCustomClaims()
+     {
+         return [];
+     }
 }

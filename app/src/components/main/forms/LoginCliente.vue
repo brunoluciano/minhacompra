@@ -144,7 +144,25 @@ export default {
     },
 
     onSubmit() {
-      alert(this.login.email);
+      this.$http
+        .post("auth/cliente/login", this.login)
+        .then((res) => res.json())
+        .then((token) => {
+          localStorage.setItem("token", token.access_token);
+          localStorage.setItem("cliente", JSON.stringify(token.user));
+
+          this.$store.commit("setClienteLogado", true);
+
+          this.$router.push({
+            name: "perfil",
+          });
+
+          this.successNotify();
+        }),
+        (err) => {
+          console.log(err);
+          this.errorNotify();
+        };
     },
   },
 

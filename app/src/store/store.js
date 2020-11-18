@@ -10,6 +10,12 @@ export default new Vuex.Store({
     plugins: [createPersistedState()], //persistir dados
 
     state: {
+        cliente: {
+            data: {},
+            pessoa: {},
+        },
+        clienteLogado: false,
+
         usuario: {
             data: {},
             empresa: {},
@@ -54,7 +60,6 @@ export default new Vuex.Store({
                 (err) => {
                     console.log(err);
                 };
-
         },
 
         logout(state) {
@@ -65,6 +70,37 @@ export default new Vuex.Store({
             localStorage.clear();
             localStorage.removeItem('vuex');
             resource.$router.push({ name: "home" });
+        },
+
+        loginCliente(state) {
+            let cliente = localStorage.getItem("cliente");
+            let token = localStorage.getItem("token");
+            cliente = JSON.parse(cliente)
+            state.cliente.data = cliente;
+            state.usuario.token = token;
+            resource.$http
+                .get(`cliente/${cliente.id}`)
+                .then((res) => res.json())
+                .then((user) => {
+                    state.cliente.pessoa = user.pessoa;
+                }),
+                (err) => {
+                    console.log(err);
+                };
+        },
+
+        logoutCliente(state) {
+            state.cliente.data = "";
+            state.cliente.pessoa = "";
+            state.usuario.token = "";
+
+            localStorage.clear();
+            localStorage.removeItem('vuex');
+            resource.$router.push({ name: "home" });
+        },
+
+        setClienteLogado(state, val) {
+            state.clienteLogado = val;
         }
 
         // logout (state) {

@@ -14,9 +14,7 @@
           <div class="q-py-lg">
             <div class="column items-center">
               <q-avatar class="col">
-                <img
-                  src="https://static-images.ifood.com.br/image/upload//logosgde/2959111d-2628-46c6-9fb5-a42a710ad29a/201912201539_o5xi_i.png"
-                />
+                <img :src="empresa.imgUrl" />
               </q-avatar>
               <q-separator color="grey" class="q-my-lg" />
               <q-icon
@@ -35,16 +33,18 @@
           <q-item active clickable>
             <q-item-section class="text-center text-blue-grey">
               <q-img
-                src="https://static-images.ifood.com.br/image/upload//logosgde/2959111d-2628-46c6-9fb5-a42a710ad29a/201912201539_o5xi_i.png"
+                :src="empresa.imgUrl"
                 spinner-color="blue-grey-8"
                 spinner-size="82px"
                 transition="jump-up"
               />
               <div class="text-h5 text-weight-bold text-uppercase">
-                Supermercado
+                {{ empresa.nome }}
               </div>
               <div class="text-subtitle">
-                Av. Brasil, 123 - Centro, São Paulo - SP
+                {{ empresa.endereco }}, {{ empresa.numero }} -
+                {{ empresa.bairro }}, {{ empresa.cidade }} -
+                {{ empresa.estado.sigla }}
               </div>
             </q-item-section>
           </q-item>
@@ -54,7 +54,7 @@
           <q-item-section>
             <q-item clickable v-ripple class="text-center">
               <q-item-section class="ellipsis-2-line">
-                <div class="text-h5 text-weight-bold">Usuário</div>
+                <div class="text-h5 text-weight-bold">{{ user.nome }}</div>
               </q-item-section>
             </q-item>
             <q-item clickable v-ripple>
@@ -100,11 +100,20 @@
 
 <script>
 export default {
+  props: ["empresa"],
+
   data() {
     return {
       drawer: false,
       miniState: false,
+      user: {},
     };
+  },
+
+  created() {
+    window.setTimeout(() => {
+      this.user = this.$store.state.usuario.data;
+    }, 500);
   },
 
   methods: {
@@ -122,7 +131,7 @@ export default {
     },
 
     sair() {
-      this.$router.push({ name: "home" });
+      this.$store.commit("logout");
     },
   },
 };

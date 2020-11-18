@@ -1,6 +1,6 @@
 <template>
   <div>
-    <menu-lateral></menu-lateral>
+    <menu-lateral :empresa="empresa"></menu-lateral>
 
     <q-page class="q-px-lg q-py-md">
       <q-markup-table class="text-center">
@@ -49,11 +49,29 @@ export default {
     return {
       drawer: false,
       miniState: false,
+      empresa: {},
     };
   },
 
   components: {
     MenuLateral,
+  },
+
+  created() {
+    window.setTimeout(() => {
+      this.empresa = this.$store.state.usuario.empresa;
+      this.$http
+        .get(`empresa/${this.empresa.id}`)
+        .then((res) => res.json())
+        .then((empresa) => {
+          this.empresa = empresa;
+          let url = `${this.$http.options.root}/empresa/${this.empresa.id}/images/logo`;
+          this.empresa.imgUrl = url;
+        }),
+        (err) => {
+          console.log(err);
+        };
+    }, 500);
   },
 };
 </script>

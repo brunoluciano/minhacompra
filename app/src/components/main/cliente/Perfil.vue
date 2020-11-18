@@ -3,29 +3,29 @@
     <div class="col-12 col-sm-5 col-md-3">
       <q-card class="card-cliente shadow-5">
         <q-card-section class="bg-title-card text-white q-pa-xs">
-          <div class="text-h5 text-center">Nome Cliente</div>
+          <div class="text-h5 text-center">{{ cliente.pessoa.nome }}</div>
         </q-card-section>
         <q-card-section class="q-pa-none data-perfil">
           <q-list dense class="data-perfil text-blue-grey-5 ellipsis">
             <q-item clickable v-ripple>
               <q-item-section class="text-weight-bold"> CPF </q-item-section>
-              <q-item-section class="text-center"
-                >123.456.789-12</q-item-section
-              >
+              <q-item-section class="text-center">{{
+                cliente.pessoa.cpf
+              }}</q-item-section>
             </q-item>
             <q-item clickable v-ripple>
               <q-item-section class="text-weight-bold"> E-mail </q-item-section>
-              <q-item-section class="text-center"
-                >cliente@email.com</q-item-section
-              >
+              <q-item-section class="text-center">{{
+                cliente.email
+              }}</q-item-section>
             </q-item>
             <q-item clickable v-ripple>
               <q-item-section class="text-weight-bold">
                 Telefone
               </q-item-section>
-              <q-item-section class="text-center"
-                >(99) 987654-3210</q-item-section
-              >
+              <q-item-section class="text-center">{{
+                cliente.pessoa.telefone
+              }}</q-item-section>
             </q-item>
 
             <q-separator spaced />
@@ -38,7 +38,7 @@
                 </div>
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple @click="sair">
               <q-item-section>
                 <q-item-label
                   ><div>
@@ -51,6 +51,16 @@
           </q-list>
         </q-card-section>
       </q-card>
+
+      <q-btn
+        rounded
+        outline
+        color="blue-grey"
+        icon="mdi-undo-variant"
+        label="Voltar para Lojas"
+        @click="voltarLojas"
+        class="full-width q-mt-lg"
+      />
     </div>
 
     <div class="col-12 col-sm-7 col-md-9">
@@ -153,7 +163,13 @@ export default {
         mostraLojasFavoritas: false,
         mostraCartoes: false,
       },
+
+      cliente: {},
     };
+  },
+
+  created() {
+    this.cliente = this.$store.state.cliente;
   },
 
   methods: {
@@ -174,6 +190,17 @@ export default {
     },
     fecharModalCartoes(val) {
       this.modal.mostraCartoes = val.target;
+    },
+
+    sair() {
+      this.$store.commit("logoutCliente");
+    },
+
+    voltarLojas() {
+      this.$router.push({
+        name: "buscarlojasbycep",
+        params: { cep: this.cliente.pessoa.cep },
+      });
     },
   },
 };

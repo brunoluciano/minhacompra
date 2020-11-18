@@ -2,7 +2,7 @@
   <div>
     <app-menu>
       <voltar-dashboard
-        v-if="$route.name != 'dashboardgerente'"
+        v-if="$route.name != 'dashboardgerente' && $route.name != 'dashboardfuncionario'"
       ></voltar-dashboard>
       <router-view></router-view>
     </app-menu>

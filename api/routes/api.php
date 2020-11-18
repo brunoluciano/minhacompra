@@ -78,4 +78,11 @@ Route::group([
         Route::post('refresh', 'Api\\AuthControllerUsuario@refresh');
         Route::get('user-profile', 'Api\\AuthControllerUsuario@userProfile');
     });
+    Route::prefix('cliente')->group(function () {
+        Route::post('login', 'Api\\AuthControllerCliente@login');
+        Route::post('register', 'Api\\AuthControllerCliente@register');
+        Route::post('logout', 'Api\\AuthControllerCliente@logout');
+        Route::post('refresh', 'Api\\AuthControllerCliente@refresh');
+        Route::get('user-profile', 'Api\\AuthControllerCliente@userProfile');
+    });
 });
