@@ -17,7 +17,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::with('pessoa')->get();
+        $clientes = Cliente::with(['pessoa', 'carrinho'])->get();
         return $clientes;
     }
 
@@ -55,7 +55,7 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        $cliente = Cliente::with('pessoa')->findOrFail($id);
+        $cliente = Cliente::with(['pessoa', 'carrinho'])->findOrFail($id);
         return $cliente;
     }
 
@@ -76,7 +76,7 @@ class ClienteController extends Controller
 
         $requestData = $request->all();
 
-        $cliente = Cliente::with('pessoa')->findOrFail($id);
+        $cliente = Cliente::with(['pessoa', 'carrinho'])->findOrFail($id);
         $cliente->update($requestData);
 
         return $cliente;

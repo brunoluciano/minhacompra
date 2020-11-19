@@ -124,7 +124,48 @@ export default {
     },
 
     adicionarCarrinho() {
-      this.$root.qtdItensCarrinho++;
+      let cliente = this.$store.state.cliente;
+
+      let form = {
+        produto_id: this.produto.id,
+        carrinho_id: cliente.carrinho.id,
+        quantidade: this.quantidade,
+      };
+
+      this.$http
+        .post(`cliente/${cliente.id}/listacarrinho`, form)
+        .then((res) => res.json())
+        .then(
+          (listaproduto) => {
+            this.$store.commit("addProdutoCarrinho", listaproduto);
+            this.successNotify(
+              `Sucesso ao adicionar o produto ${this.produto.descricao} ao carrinho!`
+            );
+          },
+          (err) => {
+            console.log(err);
+            this.errorNotify(
+              `Erro ao remover o produto ${this.produto.descricao} ao carrinho!`
+            );
+          }
+        );
+    },
+
+    successNotify(msg) {
+      this.$q.notify({
+        progress: true,
+        position: "top",
+        type: "positive",
+        message: msg,
+      });
+    },
+    errorNotify(msg) {
+      this.$q.notify({
+        progress: true,
+        position: "top",
+        type: "negative",
+        message: msg,
+      });
     },
 
     formatPrice(value) {

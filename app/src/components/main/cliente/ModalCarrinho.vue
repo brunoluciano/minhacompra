@@ -33,18 +33,26 @@
                 </tr>
               </thead>
               <tbody class="text-center text-grey-8">
-                <tr v-for="n in 10" :key="n">
+                <tr v-for="listaproduto in listaprodutos" :key="listaproduto">
                   <td class="text-center">
                     <q-list>
                       <q-item>
                         <q-item-section>
                           <q-item-label>
-                            <q-btn dense round color="red-5" padding="xs">
+                            <q-btn
+                              dense
+                              round
+                              color="red-5"
+                              padding="xs"
+                              @click="
+                                removerProdutoCarrinho(listaproduto.produto)
+                              "
+                            >
                               <q-icon name="close" size="1em" />
                             </q-btn>
                             <q-avatar class="shadow-4 q-mx-md">
                               <q-img
-                                src="https://www.kindpng.com/picc/m/411-4119926_cardboard-box-png-clip-art-image-transparent-png.png"
+                                :src="listaproduto.produto.imgUrl"
                                 spinner-color="teal"
                                 spinner-size="50px"
                                 :thickness="5"
@@ -53,21 +61,23 @@
                               />
                             </q-avatar>
                             <span class="text-subtitle2 ellipsis">
-                              Produto Produto Produto Produto
+                              {{ listaproduto.produto.descricao }}
                             </span>
                           </q-item-label>
                         </q-item-section>
                       </q-item>
                     </q-list>
                   </td>
-                  <td class="custom-font">R$ 123,00</td>
+                  <td class="custom-font">
+                    R$ {{ listaproduto.produto.preco }}
+                  </td>
                   <td>
                     <q-input
                       ref="inputQtd"
                       rounded
                       outlined
                       dense
-                      v-model.number="quantidade"
+                      v-model.number="listaproduto.quantidade"
                       color="blue-grey-4"
                       type="number"
                       input-class="text-subtitle1 text-grey-8 text-center"
@@ -98,7 +108,7 @@
                       </template>
                     </q-input>
                   </td>
-                  <td class="custom-font">R$ 123,00</td>
+                  <td class="custom-font">R$ {{ listaproduto.total }}</td>
                 </tr>
               </tbody>
             </q-markup-table>
@@ -111,7 +121,7 @@
                 label="Limpar Carrinho"
               />
               <q-btn color="orange-4" icon="mdi-currency-usd">
-                <div class="custom-font">123,00</div>
+                <div class="custom-font">{{ cliente.carrinho.total }}</div>
               </q-btn>
               <q-btn
                 color="green-5"
@@ -133,7 +143,75 @@ export default {
   data() {
     return {
       quantidade: 0,
+      listaprodutos: {},
+      cliente: {},
     };
+  },
+
+  created() {
+    window.setTimeout(() => {
+      let cliente = this.$store.state.cliente;
+      this.cliente = cliente;
+      this.listaprodutos = this.$store.state.cliente.listaprodutos;
+    }, 1000);
+    // this.$http
+    //   .get(`cliente/${cliente.id}/listacarrinho`)
+    //   .then((res) => res.json())
+    //   .then((listaprodutos) => {
+    //     this.listaprodutos = listaprodutos;
+    //     this.listaprodutos.forEach((listaproduto) => {
+    //       listaproduto.produto.imgUrl = `${this.$http.options.root}/empresa/${listaproduto.produto.empresa_id}/images/produto/${listaproduto.produto.id}`;
+    //     });
+    //   }),
+    //   (err) => {
+    //     console.log(err);
+    //   };
+  },
+
+  methods: {
+    removerProdutoCarrinho(produto) {
+      let cliente = this.$store.state.cliente;
+      this.$http
+        .delete(`cliente/${cliente.id}/listacarrinho/${produto.id}`)
+        .then(
+          (res) => {
+            res.json();
+            let indice = this.listaprodutos.findIndex(
+              (x) => x.produto.id == produto.id
+            );
+            this.listaprodutos = [
+              ...this.listaprodutos.slice(0, indice),
+              ...this.listaprodutos.slice(indice + 1),
+            ];
+            this.successNotify(
+              `Sucesso ao remover o produto ${produto.descricao} do carrinho!`
+            );
+          },
+          (err) => {
+            console.log(err);
+            this.errorNotify(
+              `Erro ao remover o produto ${produto.descricao} do carrinho!`
+            );
+          }
+        );
+    },
+
+    successNotify(msg) {
+      this.$q.notify({
+        progress: true,
+        position: "top",
+        type: "positive",
+        message: msg,
+      });
+    },
+    errorNotify(msg) {
+      this.$q.notify({
+        progress: true,
+        position: "top",
+        type: "negative",
+        message: msg,
+      });
+    },
   },
 
   watch: {

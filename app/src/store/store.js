@@ -13,6 +13,8 @@ export default new Vuex.Store({
         cliente: {
             data: {},
             pessoa: {},
+            carrinho: {},
+            listaprodutos: {},
         },
         clienteLogado: false,
 
@@ -83,6 +85,21 @@ export default new Vuex.Store({
                 .then((res) => res.json())
                 .then((user) => {
                     state.cliente.pessoa = user.pessoa;
+                    state.cliente.carrinho = user.carrinho;
+
+                    resource.$http
+                        .get(`cliente/${cliente.id}/listacarrinho`)
+                        .then((res) => res.json())
+                        .then((listaprodutos) => {
+                            state.cliente.listaprodutos = listaprodutos;
+                            state.cliente.listaprodutos.forEach((listaproduto) => {
+                                listaproduto.produto.imgUrl = `${resource.$http.options.root}/empresa/${listaproduto.produto.empresa_id}/images/produto/${listaproduto.produto.id}`;
+                            });
+                        }),
+                        (err) => {
+                            console.log(err);
+                        };
+                    console.log(state.cliente)
                 }),
                 (err) => {
                     console.log(err);
@@ -90,18 +107,34 @@ export default new Vuex.Store({
         },
 
         logoutCliente(state) {
+            resource.$router.push({ name: "home" });
+
             state.cliente.data = "";
             state.cliente.pessoa = "";
             state.usuario.token = "";
 
             localStorage.clear();
             localStorage.removeItem('vuex');
-            resource.$router.push({ name: "home" });
         },
 
         setClienteLogado(state, val) {
             state.clienteLogado = val;
-        }
+        },
+
+        addProdutoCarrinho(state, val) {
+            val.produto.imgUrl = `${resource.$http.options.root}/empresa/${val.produto.empresa_id}/images/produto/${val.produto.id}`;
+            state.cliente.carrinho.qtdItens++;
+            state.cliente.carrinho.total = val.carrinho.total;
+            state.cliente.listaprodutos.push(val);
+            console.log(val)
+        },
+
+        addQtdItensCarrinho(state) {
+            state.cliente.carrinho.qtdItens++;
+        },
+        remQtdItensCarrinho(state) {
+            state.cliente.carrinho.qtdItens--;
+        },
 
         // logout (state) {
         //     resource.$http

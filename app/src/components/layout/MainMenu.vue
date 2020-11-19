@@ -56,7 +56,7 @@
               @click="abrirModalCarrinho"
             >
               <q-badge rounded color="orange-8" floating>{{
-                carrinho.qtdItens
+                cliente.carrinho.qtd_itens
               }}</q-badge>
             </q-btn>
           </div>
@@ -116,12 +116,6 @@ export default {
     this.carrinho.qtdItens = this.$root.qtdItensCarrinho;
     this.clienteLogado = this.$store.state.clienteLogado;
     this.cliente = this.$store.state.cliente;
-  },
-
-  watch: {
-    "$root.qtdItensCarrinho": function (value) {
-      this.carrinho.qtdItens = value;
-    },
   },
 
   methods: {

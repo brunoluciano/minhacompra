@@ -41,8 +41,4 @@ export default new Vue({
     router,
     store,
     render: h => h(App),
-    
-    data: {
-        qtdItensCarrinho: 0,
-    }
 }).$mount('#app')
