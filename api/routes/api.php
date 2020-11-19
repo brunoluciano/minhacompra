@@ -30,6 +30,7 @@ Route::post('empresa/cep', 'Api\\EmpresaController@getByCEP');
 
 Route::prefix('cliente/{cliente}')->group(function () {
     Route::resource('carrinho', 'Api\\CarrinhoController');
+    Route::post('carrinho/{id}', 'Api\\CarrinhoController@finalizarCompra');
     Route::get('listacarrinho', 'Api\\ListaProdutoCarrinhoController@index');
     Route::post('listacarrinho', 'Api\\ListaProdutoCarrinhoController@addProduto');
     Route::delete('listacarrinho/{produto}', 'Api\\ListaProdutoCarrinhoController@remProduto');

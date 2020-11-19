@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Models\Carrinho;
+use App\Models\ListaProdutoCarrinho;
+use App\Models\Venda;
+use App\Models\ItensVenda;
+
 
 class CarrinhoController extends Controller
 {
@@ -68,5 +73,37 @@ class CarrinhoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function finalizarCompra($cliente_id, $carrinho_id)
+    {
+        $carrinho = Carrinho::where('id', $carrinho_id)->first();
+        $produtos = ListaProdutoCarrinho::where('carrinho_id', $carrinho->id)->with('produto')->get();
+
+        $venda = new Venda();
+        $venda->empresa_id = $produtos[0]->produto->empresa_id;
+        $venda->cliente_id = $cliente_id;
+        $venda->funcionario_id = null;
+        $venda->entregador_id = null;
+        $venda->horario = Carbon::now()->toDateTimeString();
+        $venda->qtd_itens = $carrinho->qtd_itens;
+        $venda->total_venda = $carrinho->total;
+        $venda->save();
+
+        foreach ($produtos as $produto) {
+            $itens_venda = new ItensVenda();
+            $itens_venda->produto_id = $produto->produto->id;
+            $itens_venda->venda_id = $venda->id;
+            $itens_venda->quantidade = $produto->quantidade;
+            $itens_venda->total = $produto->total;
+            $itens_venda->save();
+        }
+
+        ListaProdutoCarrinho::where('carrinho_id', $carrinho->id)->delete();
+        $carrinho->qtd_itens = 0;
+        $carrinho->total = 0;
+        $carrinho->save();
+
+        return $venda;
     }
 }

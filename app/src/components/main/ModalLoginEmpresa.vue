@@ -157,11 +157,7 @@ export default {
           localStorage.setItem("user", JSON.stringify(token.user));
 
           let user = token.user;
-          let rota = [
-            "dashboardgerente",
-            "dashboardfuncionario",
-            "dashboardentregador",
-          ];
+          let rota = ["dashboardgerente", "pedidos", "dashboardentregador"];
 
           this.$router.push({
             name: rota[user.tipo_usuario_id - 1],

@@ -1,27 +1,23 @@
 <template>
   <div>
-    <menu-lateral :empresa="empresa"></menu-lateral>
-
-    <q-page class="q-px-lg q-py-md">
-      <router-view></router-view>
-    </q-page>
+    <q-table
+      title="Treats"
+      :data="data"
+      :columns="columns"
+      row-key="name"
+      :selected-rows-label="getSelectedString"
+      selection="multiple"
+      :selected.sync="selected"
+    />
   </div>
 </template>
 
 <script>
-import MenuLateral from "../../shared/MenuLateral.vue";
-
 export default {
   data() {
     return {
-      drawer: false,
-      miniState: false,
-      empresa: {},
+      selected: [],
     };
-  },
-
-  components: {
-    MenuLateral,
   },
 
   created() {
@@ -43,5 +39,5 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 </style>

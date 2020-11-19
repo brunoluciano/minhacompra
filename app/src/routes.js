@@ -28,14 +28,19 @@ const Promocoes = () =>
     import ('./components/app/gerente/operacoes/Promocoes.vue');
 // ESTOQUE
 const Estoque = () =>
-import ('./components/app/gerente/estoque/Estoque.vue');
+    import ('./components/app/gerente/estoque/Estoque.vue');
 // ESTOQUE
 const Banners = () =>
-import ('./components/app/gerente/configuracoes/Banners.vue');
+    import ('./components/app/gerente/configuracoes/Banners.vue');
 
 
 const IndexFuncionario = () =>
     import ('./components/app/funcionario/Index.vue');
+const Pedidos = () =>
+    import ('./components/app/funcionario/Pedidos.vue');
+const SepararPedido = () =>
+    import ('./components/app/funcionario/SepararPedido.vue');
+
 
 export const routes = [{
         path: '/',
@@ -122,10 +127,25 @@ export const routes = [{
             },
 
             {
-                path: 'pedidos',
+                path: 'funcionario',
                 component: IndexFuncionario,
                 name: 'dashboardfuncionario',
-            }
+                children: [{
+                        path: 'pedidos',
+                        component: Pedidos,
+                        name: 'pedidos',
+                    },
+                    {
+                        path: 'pedidos/:pedido',
+                        component: SepararPedido,
+                        name: 'separarpedido',
+                        props: true,
+                    },
+
+                ]
+            },
+
+
         ]
     }
 ];

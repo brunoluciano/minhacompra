@@ -127,6 +127,7 @@
                 color="green-5"
                 icon="mdi-cart-check"
                 label="Finalizar Compra"
+                @click="finalizarCompra()"
               />
             </q-btn-group>
           </div>
@@ -192,6 +193,26 @@ export default {
             this.errorNotify(
               `Erro ao remover o produto ${produto.descricao} do carrinho!`
             );
+          }
+        );
+    },
+
+    finalizarCompra() {
+      let cliente = this.$store.state.cliente;
+      this.$http
+        .post(`cliente/${cliente.id}/carrinho/${cliente.carrinho.id}`)
+        .then(
+          (res) => {
+            res.json();
+            cliente.listaprodutos = "";
+            cliente.carrinho.qtd_itens = 0;
+            cliente.carrinho.total = 0;
+            this.listaprodutos = "";
+            this.successNotify(`Compra realizada com sucesso!`);
+          },
+          (err) => {
+            console.log(err);
+            this.errorNotify(`Erro ao finalizar compra!`);
           }
         );
     },

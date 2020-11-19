@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Venda;
+use App\Models\Cliente;
 
 class VendaController extends Controller
 {
@@ -16,7 +17,11 @@ class VendaController extends Controller
      */
     public function index($empresa_id)
     {
-        $vendas = Venda::with('empresa')->where('empresa_id', $empresa_id)->get();
+        $vendas = Venda::with(['cliente', 'empresa', 'funcionario', 'entregador', 'status_venda'])->where('empresa_id', $empresa_id)->get();
+        foreach ($vendas as $venda) {
+            $pessoa = Cliente::where('id', $venda->cliente_id)->with('pessoa')->first();
+            $venda['pessoa'] = $pessoa->pessoa;
+        }
         return $vendas;
     }
 
@@ -51,7 +56,7 @@ class VendaController extends Controller
      */
     public function show($empresa_id, $id)
     {
-        $venda = Venda::with('empresa')->where('empresa_id', $empresa_id)->findOrFail($id);
+        $venda = Venda::with(['cliente', 'empresa', 'funcionario', 'entregador', 'status_venda'])->where('empresa_id', $empresa_id)->findOrFail($id);
         return $venda;
     }
 
@@ -74,7 +79,7 @@ class VendaController extends Controller
         $requestData = $request->all();
         $requestData['empresa_id'] = $empresa_id;
 
-        $venda = Venda::with('empresa')->where('empresa_id', $empresa_id)->findOrFail($id);
+        $venda = Venda::with(['cliente', 'empresa', 'funcionario', 'entregador', 'status_venda'])->where('empresa_id', $empresa_id)->findOrFail($id);
         $venda->update($requestData);
 
         return $venda;
@@ -88,7 +93,7 @@ class VendaController extends Controller
      */
     public function destroy($empresa_id, $id)
     {
-        $venda = Venda::with('empresa')->where('empresa_id', $empresa_id)->findOrFail($id);
+        $venda = Venda::with(['cliente', 'empresa', 'funcionario', 'entregador', 'status_venda'])->where('empresa_id', $empresa_id)->findOrFail($id);
         $venda->delete();
         return $venda;
     }
